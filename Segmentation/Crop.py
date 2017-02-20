@@ -25,5 +25,3 @@ class Crop:
 			# draw a rectangle around the region of interest
 			cv2.rectangle(self.imageToCrop, self.refPt[0], self.refPt[1], (0, 255, 0), 2)
 			cv2.imshow("lichen", self.imageToCrop)
-
-		return self.refPt
