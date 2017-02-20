@@ -3,9 +3,32 @@ import numpy as np
 import cv2
 from matplotlib import pyplot as plt
 import UtilityFunctions as utils
+from Segmentation.Crop import Crop
 
+img = cv2.imread("D:\Python\Lichen\images\lichen.png")
+cv2.namedWindow('lichen')
 
-img = cv2.imread("D:\Python\Lichen\lichen.png")
+clonedImage = img.copy()
+
+# Use a copy so roi can be drawn then thrown away
+cropWindow = Crop(clonedImage)
+
+cv2.setMouseCallback('lichen', cropWindow.crop)
+
+while True:
+	# display the image and wait for a keypress
+	cv2.imshow("lichen", cropWindow.imageToCrop)
+	key = cv2.waitKey(1) & 0xFF
+
+	# if the 'r' key is pressed, reset the cropping region
+	if key == ord("r"):
+		img = clonedImage.copy()
+
+	# if the 'c' key is pressed, break from the loop
+	elif key == ord("c"):
+		break
+
+cv2.destroyAllWindows()
 
 meanShiftedImage = cv2.pyrMeanShiftFiltering(img, 5, 60, 3)
 
@@ -18,6 +41,7 @@ hsv = cv2.cvtColor(meanShiftedImage2, cv2.COLOR_BGR2HSV)
 image = hsv.reshape((hsv.shape[0] * hsv.shape[1], 3))
 
 clt = KMeans(5)
+
 clt.fit(image)
 
 hist = utils.centroid_histogram(clt)
