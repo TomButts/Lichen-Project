@@ -58,7 +58,8 @@ Z = np.float32(Z)
 
 # define criteria, number of clusters(K) and apply kmeans()
 criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 20, 1.0)
-K = 3
+
+K = 4
 ret,label,center=cv2.kmeans(Z,K,None,criteria,10,cv2.KMEANS_RANDOM_CENTERS)
 
 # Now convert back into uint8, and make original image
@@ -66,61 +67,26 @@ center = np.uint8(center)
 res = center[label.flatten()]
 colourQuantisedImage = res.reshape((roi.shape))
 
-# meanShiftedImage = cv2.pyrMeanShiftFiltering(res2, 5, 60, 3)
-# median = cv2.medianBlur(meanShiftedImage, 5)
-bgr = cv2.cvtColor(colourQuantisedImage,cv2.COLOR_LAB2BGR)
+mask = np.zeros(colourQuantisedImage.shape[:2], np.uint8)
 
-gray = cv2.cvtColor(colourQuantisedImage,cv2.COLOR_BGR2GRAY)
-ret, thresh = cv2.threshold(gray,0,255,cv2.THRESH_BINARY_INV+cv2.THRESH_OTSU)
+bgdModel = np.zeros((1,65),np.float64)
+fgdModel = np.zeros((1,65),np.float64)
 
-cannyEdges = cv2.Canny(thresh, 100, 200)
+height, width, channels = colourQuantisedImage.shape
 
-kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (7, 7))
-closedEdges = cv2.morphologyEx(cannyEdges, cv2.MORPH_CLOSE, kernel)
+# x,y,width,height
+rect = (1,1,width,height)
 
-sure_bg = cv2.dilate(closedEdges, kernel,iterations=3)
+cv2.grabCut(colourQuantisedImage, mask, rect, bgdModel, fgdModel, 5, cv2.GC_INIT_WITH_RECT)
 
-plt.subplot(121),plt.imshow(sure_bg, cmap = 'gray')
-plt.title('K Means Image'), plt.xticks([]), plt.yticks([])
+mask2 = np.where((mask==2)|(mask==0),0,1).astype('uint8')
+segmentedImage = clonedRoi * mask2[:,:,np.newaxis]
+
+plt.subplot(121),plt.imshow(segmentedImage, cmap = 'gray')
+plt.title('Segmented Image'), plt.xticks([]), plt.yticks([])
 plt.subplot(122),plt.imshow(clonedRoi, cmap = 'gray')
 plt.title('Original Image'), plt.xticks([]), plt.yticks([])
 plt.show()
 
 cv2.waitKey(0)
 cv2.destroyAllWindows()
-
-# clt = KMeans(5)
-#
-# clt.fit(image)
-#
-# hist = utils.centroid_histogram(clt)
-# colours = utils.main_colours(hist, clt.cluster_centers_)
-#
-# bar = utils.plot_colors(hist, clt.cluster_centers_)
-#
-# bounds = utils.BGR2HSVColourBoundaries(colours[2], 15)
-#
-# mask = cv2.inRange(hsv, bounds[0], bounds[1])
-# res = cv2.bitwise_and(hsv, hsv, mask = mask)
-
-cannyEdges = cv2.Canny(colourQuantisedImage, 100, 200)
-
-kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (7, 7))
-closedEdges = cv2.morphologyEx(cannyEdges, cv2.MORPH_CLOSE, kernel)
-
-_, contours, _ = cv2.findContours(cannyEdges.copy(), cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
-contours = sorted(contours, key = cv2.contourArea, reverse = True)[:10]
-
-for c in contours:
-	peri = cv2.arcLength(c, True)
-	approx = cv2.approxPolyDP(c, 0.02 * peri, True)
-	cv2.drawContours(roi, [approx], -1, (0, 255, 0), 2)
-
-cv2.imshow("contours", closedEdges)
-cv2.waitKey()
-
-# plt.subplot(121),plt.imshow(meanShiftedImage2,cmap = 'gray')
-# plt.title('Original Image'), plt.xticks([]), plt.yticks([])
-# plt.subplot(122),plt.imshow(cannyEdges,cmap = 'gray')
-# plt.title('Edge Image'), plt.xticks([]), plt.yticks([])
-# plt.show()
