@@ -5,7 +5,10 @@ from matplotlib import pyplot as plt
 import UtilityFunctions as utils
 from Segmentation.Crop import Crop
 
-img = cv2.imread("D:\Python\Lichen\images\lichen.png")
+img = cv2.imread("D:\Python\Lichen\images\lichen2.jpg")
+
+img = cv2.resize(img, None, fx=0.1, fy=0.1, interpolation = cv2.INTER_CUBIC)
+
 cv2.namedWindow('lichen')
 
 clonedImage = img.copy()
@@ -31,25 +34,18 @@ while True:
 cv2.destroyAllWindows()
 
 # coords are y1,y2, x1,x2 format
-roi = img[cropWindow.refPt[0][0]:cropWindow.refPt[1][0], cropWindow.refPt[0][1]:cropWindow.refPt[1][1]]
+roi = img[cropWindow.refPt[0][1]:cropWindow.refPt[1][1], cropWindow.refPt[0][0]:cropWindow.refPt[1][0]]
 
 # clone roi to compare
 clonedRoi = roi.copy()
-
-# meanShiftedImage = cv2.pyrMeanShiftFiltering(roi, 5, 60, 3)
-#
-# median = cv2.medianBlur(meanShiftedImage, 5)
-#
-# meanShiftedImage2 = cv2.pyrMeanShiftFiltering(median, 5, 60, 3)
-#
-# hsv = cv2.cvtColor(meanShiftedImage2, cv2.COLOR_BGR2HSV)
-
-roi = cv2.cvtColor(roi, cv2.COLOR_BGR2LAB)
 
 #filters
 roi = cv2.pyrMeanShiftFiltering(roi, 15, 60, 3)
 roi = cv2.medianBlur(roi, 5)
 roi = cv2.pyrMeanShiftFiltering(roi, 5, 60, 3)
+
+cv2.imshow("mean shifted", roi)
+cv2.waitKey()
 
 Z = roi.reshape((roi.shape[0] * roi.shape[1], 3))
 
@@ -59,7 +55,7 @@ Z = np.float32(Z)
 # define criteria, number of clusters(K) and apply kmeans()
 criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 20, 1.0)
 
-K = 4
+K = 3
 ret,label,center=cv2.kmeans(Z,K,None,criteria,10,cv2.KMEANS_RANDOM_CENTERS)
 
 # Now convert back into uint8, and make original image
@@ -82,9 +78,13 @@ cv2.grabCut(colourQuantisedImage, mask, rect, bgdModel, fgdModel, 5, cv2.GC_INIT
 mask2 = np.where((mask==2)|(mask==0),0,1).astype('uint8')
 segmentedImage = clonedRoi * mask2[:,:,np.newaxis]
 
-plt.subplot(121),plt.imshow(segmentedImage, cmap = 'gray')
+# OpenCV Operates in BGR so convert to RGB for matplotlib plots
+segmentedImage = cv2.cvtColor(segmentedImage, cv2.COLOR_BGR2RGB)
+clonedRoi = cv2.cvtColor(clonedRoi, cv2.COLOR_BGR2RGB)
+
+plt.subplot(121),plt.imshow(segmentedImage)
 plt.title('Segmented Image'), plt.xticks([]), plt.yticks([])
-plt.subplot(122),plt.imshow(clonedRoi, cmap = 'gray')
+plt.subplot(122),plt.imshow(clonedRoi)
 plt.title('Original Image'), plt.xticks([]), plt.yticks([])
 plt.show()
 
