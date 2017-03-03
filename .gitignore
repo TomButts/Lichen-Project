@@ -1,4 +1,4 @@
 /*.png
 /*.jpg
 /models/
-/*.tar.gz
+classification/checkpoints/

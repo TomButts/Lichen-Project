@@ -5,7 +5,7 @@ import os
 import sys
 
 dir = os.path.dirname(__file__)
-slimFolderPath = os.path.join(dir, '../models/slim')
+slimFolderPath = os.path.join(dir, '../../Dependencies/models/slim')
 
 sys.path.append(slimFolderPath)
 
@@ -17,7 +17,7 @@ from nets import inception_resnet_v2
 from preprocessing import inception_preprocessing
 
 
-def inception_resnet_v2_features:
+def inception_resnet_v2_features():
     # relative directory to checkpoints
     checkpointsFolderPath = os.path.join(dir, '../classification/checkpoints')
 
@@ -62,3 +62,5 @@ def inception_resnet_v2_features:
         print(features)
 
     return features
+
+inception_resnet_v2_features()

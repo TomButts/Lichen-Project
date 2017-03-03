@@ -2,7 +2,7 @@ import sys
 import os
 
 dir = os.path.dirname(__file__)
-slimFolderPath = os.path.join(dir, '../models/slim')
+slimFolderPath = os.path.join(dir, '../../Dependencies/models/slim')
 
 sys.path.append(slimFolderPath)
 
