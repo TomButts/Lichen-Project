@@ -5,7 +5,7 @@ import os
 import sys
 
 dir = os.path.dirname(__file__)
-slimFolderPath = os.path.join(dir, '../../Dependencies/models/slim')
+slimFolderPath = os.path.join(dir, '../../../Dependencies/models/slim')
 
 sys.path.append(slimFolderPath)
 
@@ -19,14 +19,14 @@ from preprocessing import inception_preprocessing
 
 def inception_resnet_v2_features():
     # relative directory to checkpoints
-    checkpointsFolderPath = os.path.join(dir, '../classification/checkpoints')
+    checkpointsFolderPath = os.path.join(dir, 'checkpoints/')
 
     slim = tf.contrib.slim
 
     # size of images inc-resnet is compatible with
     imageSize = inception_resnet_v2.inception_resnet_v2.default_image_size
 
-    checkpointPath = os.path.join(dir, '../classification/checkpoints/inception_resnet_v2_2016_08_30.ckpt')
+    checkpointPath = os.path.join(dir, 'checkpoints/inception_resnet_v2_2016_08_30.ckpt')
 
     imagePath = 'file:///Users/tom/Masters-Project/Lichen-Project/images/parmelia.jpg'
     imageString = urllib2.urlopen(imagePath).read()
@@ -62,5 +62,3 @@ def inception_resnet_v2_features():
         print(features)
 
     return features
-
-inception_resnet_v2_features()

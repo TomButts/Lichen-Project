@@ -2,7 +2,7 @@ import sys
 import os
 
 dir = os.path.dirname(__file__)
-slimFolderPath = os.path.join(dir, '../../Dependencies/models/slim')
+slimFolderPath = os.path.join(dir, '../../../Dependencies/models/slim')
 
 sys.path.append(slimFolderPath)
 
@@ -13,7 +13,7 @@ import tensorflow as tf
 url = "http://download.tensorflow.org/models/inception_resnet_v2_2016_08_30.tar.gz"
 
 # Relative download directory
-checkpointsFolderPath = os.path.join(dir, '../classification/checkpoints')
+checkpointsFolderPath = os.path.join(dir, 'checkpoints/')
 
 if not tf.gfile.Exists(checkpointsFolderPath):
     tf.gfile.MakeDirs(checkpointsFolderPath)

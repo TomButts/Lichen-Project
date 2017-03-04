@@ -1,4 +1,4 @@
 /*.png
 /*.jpg
 /models/
-classification/checkpoints/
+feature-extraction/inception-resnet-v2/checkpoints/
