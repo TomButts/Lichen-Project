@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 
-def grabCut(imageToCut, processedImage = None):
+def grab_cut(imageToCut, processedImage = None):
     # optionally don't use a processed image to calculate grabcut mask
     if processedImage is None:
         processedImage = imageToCut

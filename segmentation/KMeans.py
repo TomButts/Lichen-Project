@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 
-def clusterColours(image, clusters):
+def cluster_colours(image, clusters):
     Z = image.reshape((image.shape[0] * image.shape[1], 3))
 
     # convert to np.float32

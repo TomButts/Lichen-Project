@@ -48,9 +48,9 @@ roi = cv2.pyrMeanShiftFiltering(roi, 5, 60, 3)
 # cv2.imshow("mean shifted", roi)
 # cv2.waitKey()
 
-colourQuantisedImage = KMeans.clusterColours(roi, 2)
+colourQuantisedImage = KMeans.cluster_colours(roi, 2)
 
-segmentedImage = GrabCut.grabCut(clonedRoi)
+segmentedImage = GrabCut.grab_cut(clonedRoi)
 
 # OpenCV Operates in BGR so convert to RGB for matplotlib plots
 segmentedImage = cv2.cvtColor(segmentedImage, cv2.COLOR_BGR2RGB)
