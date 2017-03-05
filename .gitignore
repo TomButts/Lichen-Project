@@ -1,5 +1,6 @@
-/*.png
-/*.jpg
+images
+*.png
+*.jpg
 /models/
 feature-extraction/inception-resnet-v2/checkpoints/
-/*.csv
+*.csv
