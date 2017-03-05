@@ -17,7 +17,7 @@ from nets import inception_resnet_v2
 from preprocessing import inception_preprocessing
 
 
-def inception_resnet_v2_features():
+def inception_resnet_v2_features(imagePath):
     # relative directory to checkpoints
     checkpointsFolderPath = os.path.join(dir, 'checkpoints/')
 
@@ -28,7 +28,8 @@ def inception_resnet_v2_features():
 
     checkpointPath = os.path.join(dir, 'checkpoints/inception_resnet_v2_2016_08_30.ckpt')
 
-    imagePath = 'file:///Users/tom/Masters-Project/Lichen-Project/images/parmelia.jpg'
+    # imagePath = 'file:///Users/tom/Masters-Project/Lichen-Project/images/parmelia.jpg'
+
     imageString = urllib2.urlopen(imagePath).read()
 
     # JPEG format converted to unit8 tensor

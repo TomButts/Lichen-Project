@@ -20,7 +20,7 @@ scaler.fit(X_train)
 X_train = scaler.transform(X_train)
 X_test = scaler.transform(X_test)
 
-filename = 'multi_layer_perceptron_model.sav'
+filename = 'mlp_saved_model.sav'
 loaded_model = pickle.load(open(filename, 'rb'))
 
 predictions = loaded_model.predict(X_test)
