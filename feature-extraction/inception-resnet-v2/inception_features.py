@@ -59,7 +59,4 @@ def inception_resnet_v2_features(imagePath):
 
         features = sess.run([features])
 
-        print len(features)
-        print(features)
-
-    return features
+    return features[0][0]
