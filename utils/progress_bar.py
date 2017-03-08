@@ -18,7 +18,7 @@ def print_progress_bar(iteration, total, prefix='', suffix='', decimals=1, bar_l
     filled_length = int(round(bar_length * iteration / float(total)))
     bar = '█' * filled_length + '-' * (bar_length - filled_length)
 
-    sys.stdout.write('\r%s |%s| %s%s %s' % (prefix, bar, percents, '%', suffix)),
+    sys.stdout.write('\r%s |%s| %s%s %s (%s)' % (prefix, bar, percents, '%', suffix, iteration)),
 
     if iteration == total:
         sys.stdout.write('\n')

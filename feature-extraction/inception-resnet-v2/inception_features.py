@@ -52,8 +52,6 @@ def inception_resnet_v2_features(imagePath):
 
     features = end_points['PreLogitsFlatten']
 
-    np.set_printoptions(threshold=sys.maxint)
-
     with tf.Session() as sess:
         init_fn(sess)
 
