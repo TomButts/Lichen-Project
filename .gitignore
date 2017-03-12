@@ -3,4 +3,6 @@ images
 *.jpg
 /models/
 feature-extraction/inception-resnet-v2/checkpoints/
+feature-extraction/inception-resnet-v2/labels/
+classification/multi-layer-perceptron/checkpoints/
 *.csv

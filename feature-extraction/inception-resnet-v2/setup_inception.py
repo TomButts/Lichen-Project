@@ -9,10 +9,10 @@ sys.path.append(slimFolderPath)
 from datasets import dataset_utils
 import tensorflow as tf
 
-# Model checkpoint
+# model checkpoint
 url = "http://download.tensorflow.org/models/inception_resnet_v2_2016_08_30.tar.gz"
 
-# Relative download directory
+# relative download directory
 checkpointsFolderPath = os.path.join(dir, 'checkpoints/')
 
 if not tf.gfile.Exists(checkpointsFolderPath):

@@ -13,29 +13,10 @@ from sklearn.metrics import classification_report, confusion_matrix
 import yes_no_prompt
 import pickle
 import csv
+import read_features_csv as features_csv
+import time
 
-# temp test data
-# iris = datasets.load_iris()
-# X = iris['data']
-# y = iris['target']
-
-row_number = 0
-targets = []
-data = []
-
-with open('../../feature-extraction/inception-resnet-v2/irv2_5flowers_features.csv', 'rb') as csvfile:
-    reader = csv.reader(csvfile, delimiter = ',', quotechar = '\"')
-
-    for row in reader:
-        if row_number == 0:
-            # skip headers
-            row_number += 1
-        else:
-            # create target list
-            targets.append(row[0])
-
-            # create data list
-            data.append(row[1:])
+targets, data = features_csv.read_features_csv('../../feature-extraction/inception-resnet-v2/output/lichen.csv')
 
 # assign training dataset
 X = data
@@ -52,7 +33,7 @@ scaler.fit(X_train)
 X_train = scaler.transform(X_train)
 X_test = scaler.transform(X_test)
 
-mlp = MLPClassifier(hidden_layer_sizes=(30, 30, 30), max_iter=1500)
+mlp = MLPClassifier(hidden_layer_sizes=(1536, 2000, 500), max_iter=1500)
 
 # train the network
 mlp.fit(X_train, y_train)
@@ -66,6 +47,9 @@ print(classification_report(y_test, predictions))
 
 save_model = yes_no_prompt.yes_or_no('Save model?')
 
+# unique time so all models are saved just incase
+now = time.strftime("%Y%m%d-%H%M%S")
+
 if save_model:
-    filename = 'mlp_saved_model.sav'
+    filename = 'checkpoints/mlp_saved_model_' + now + '.sav'
     pickle.dump(mlp, open(filename, 'wb'))
