@@ -35,7 +35,7 @@ def extract_features():
 
         features.append(glcm_features)
 
-    # DAISY features
+    # ORB features
     if config.orb:
         orb_config = config.orb
 
