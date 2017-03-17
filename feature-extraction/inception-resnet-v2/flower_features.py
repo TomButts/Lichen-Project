@@ -13,7 +13,7 @@ import time
 # enable long console output
 # np.set_printoptions(threshold = sys.maxint)
 
-directory = os.path.abspath('../../../flowers')
+directory = os.path.abspath('../../../102flowers')
 
 targets_path = directory + '/imagelabels.mat'
 

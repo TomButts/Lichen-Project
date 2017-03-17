@@ -1,7 +1,8 @@
 import configs.example1 as config
 import glcm
-from skimage import data
 from skimage.feature import ORB
+from skimage.color import rgb2grey
+from skimage.io import imread
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -14,24 +15,27 @@ sys.path.append(utils_path)
 
 import flatten
 
-def extract_features():
+def features(image_path):
     """Extracts a set of features (described in config file) from an image.
     Args:
-        image: the path to the image
+        image_path: the path to the image
 
     Return:
         an array of features which depending on the config options
     """
 
     features = []
-    # example image
-    image = data.camera()
+
+    image = imread(image_path)
+
+    if config.grey_required:
+        grey_image = rgb2grey(image)
 
     # GLCM features
     if config.glcm:
         glcm_config = config.glcm
 
-        glcm_features = glcm.glcm_features(image, glcm_config['modes'])
+        glcm_features = glcm.glcm_features(grey_image, glcm_config['modes'])
 
         features.append(glcm_features)
 
@@ -47,14 +51,10 @@ def extract_features():
             fast_threshold=orb_config['fast_threshold'],
             harris_k=orb_config['harris_k'])
 
-        orb_extractor.detect_and_extract(image)
+        orb_extractor.detect_and_extract(grey_image)
 
         features.append(orb_extractor.keypoints.tolist())
 
-        features.append(orb_extractor.descriptors.tolist())
+        # features.append(orb_extractor.descriptors.tolist())
 
-
-    features = list(flatten.flatten(features))
-    # TODO make file iterator
-
-extract_features()
+    return list(flatten.flatten(features))

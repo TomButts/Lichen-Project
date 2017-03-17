@@ -2,7 +2,6 @@ import csv
 import numpy as np
 import sys
 import os
-import inception_features as incep_res
 import time
 from progressbar import AdaptiveETA, ProgressBar, Percentage, Counter
 

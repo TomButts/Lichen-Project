@@ -1,4 +1,5 @@
 from skimage.feature import greycomatrix, greycoprops
+from skimage.color import rgb2grey
 
 # regions is array
 

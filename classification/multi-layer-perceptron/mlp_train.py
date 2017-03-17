@@ -10,13 +10,14 @@ from sklearn.neural_network import MLPClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import classification_report, confusion_matrix
+from sklearn import decomposition
 import yes_no_prompt
 import pickle
 import csv
 import read_features_csv as features_csv
 import time
 
-targets, data = features_csv.read_features_csv('../../feature-extraction/inception-resnet-v2/output/lichen.csv')
+targets, data = features_csv.read_features_csv('../../feature-extraction/custom/output/lichen-noorbdesc-20170314-155904.csv')
 
 # assign training dataset
 X = data
@@ -33,7 +34,7 @@ scaler.fit(X_train)
 X_train = scaler.transform(X_train)
 X_test = scaler.transform(X_test)
 
-mlp = MLPClassifier(hidden_layer_sizes=(1536, 2000, 500), max_iter=1500)
+mlp = MLPClassifier(hidden_layer_sizes=(20, 60, 30), max_iter=1500)
 
 # train the network
 mlp.fit(X_train, y_train)
