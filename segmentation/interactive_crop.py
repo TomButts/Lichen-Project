@@ -4,7 +4,7 @@
 Interactive Image Segmentation using GrabCut algorithm.
 This sample shows interactive image segmentation using grabcut algorithm.
 USAGE:
-    python grabcut.py <filename>
+    python interactive_crop.py <filename>
 README FIRST:
     Two windows will show up, one for input and one for output.
     At first, in input window, draw a rectangle around the object using
@@ -17,7 +17,8 @@ Key '2' - To select areas of probable background
 Key '3' - To select areas of probable foreground
 Key 'n' - To update the segmentation
 Key 'r' - To reset the setup
-Key 's' - To save the results and move to next image
+Key 's' - To save the results
+Key 'd' - To move to next image
 ===============================================================================
 '''
 
@@ -111,28 +112,26 @@ if os.path.isdir(output_directory) == False:
 
 for filename in os.listdir(directory_path):
     if filename.endswith(".jpeg") or filename.endswith(".jpg"):
-        print(filename)
         img = cv2.imread(directory_path + filename)
         img2 = img.copy()                               # a copy of original image
         mask = np.zeros(img.shape[:2],dtype = np.uint8) # mask initialized to PR_BG
         output = np.zeros(img.shape,np.uint8)           # output image to be shown
 
         # input and output windows
-        input_window = 'input-' + filename
-        output_window = 'output-' + filename
+        cv2.namedWindow('input',cv2.WINDOW_NORMAL)
+        cv2.namedWindow('output',cv2.WINDOW_NORMAL)
 
-        cv2.namedWindow(input_window,cv2.WINDOW_NORMAL)
-        cv2.namedWindow(output_window,cv2.WINDOW_NORMAL)
+        cv2.setMouseCallback('input',onmouse)
 
-        cv2.setMouseCallback(input_window,onmouse)
-        # cv2.moveWindow(input_window,img.shape[1]+10,90)
+        # move input window so windows are not stacked
+        cv2.moveWindow('input',img.shape[1]+10,90)
 
         print(" Instructions: \n")
         print(" Draw a rectangle around the object using right mouse button \n")
 
         while(1):
-            cv2.imshow(output_window,output)
-            cv2.imshow(input_window,img)
+            cv2.imshow('output',output)
+            cv2.imshow('input',img)
             k = cv2.waitKey(1)
 
             # key bindings
@@ -156,7 +155,6 @@ for filename in os.listdir(directory_path):
                 cv2.imwrite(image_path,output)
 
                 print('Saved to ' + image_path)
-                break
             elif k == ord('r'): # reset everything
                 print("resetting \n")
                 rect = (0,0,1,1)
@@ -180,6 +178,8 @@ for filename in os.listdir(directory_path):
                     bgdmodel = np.zeros((1,65),np.float64)
                     fgdmodel = np.zeros((1,65),np.float64)
                     cv2.grabCut(img2,mask,rect,bgdmodel,fgdmodel,1,cv2.GC_INIT_WITH_MASK)
+            elif k == ord('d'):
+                break
 
             mask2 = np.where((mask==1) + (mask==3),255,0).astype('uint8')
             output = cv2.bitwise_and(img2,img2,mask=mask2)
