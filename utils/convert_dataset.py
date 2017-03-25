@@ -32,7 +32,6 @@ def convert_dataset(directory_path, target_path, target_parser, feature_extracto
     widgets = [AdaptiveETA(), ' Completed: ', Percentage(), '  (', Counter(), ')']
     pbar = ProgressBar(widgets = widgets, max_value = len(targets)).start()
 
-    # counter
     index = 0
 
     # loop through image files

@@ -3,11 +3,12 @@ import os
 import sys
 
 dir = os.path.dirname(__file__)
-slimFolderPath = os.path.join(dir, '../../../Dependencies/models/slim')
+slimFolderPath = os.path.join(dir, '../../../Dependencies/slim')
 
 sys.path.append(slimFolderPath)
 
 import tensorflow as tf
+import tensorflow.contrib.slim as slim
 import urllib2
 
 # from datasets import imagenet
@@ -15,8 +16,6 @@ from nets import inception_resnet_v2
 from preprocessing import inception_preprocessing
 
 def inception_resnet_v2_features(image_path):
-    slim = tf.contrib.slim
-
     # size of images inc-resnet is compatible with
     image_size = inception_resnet_v2.inception_resnet_v2.default_image_size
 

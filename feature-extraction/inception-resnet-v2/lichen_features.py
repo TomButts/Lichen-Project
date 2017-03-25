@@ -13,12 +13,12 @@ import time
 # enable long console output
 # np.set_printoptions(threshold = sys.maxint)
 
-directory = os.path.abspath('../../../Lichen-Images/Ordered')
+directory = '/Users/tom/Masters-Project/Lichen-Images/Ordered'
 
 targets_path = directory + '/labels.csv'
 
 now = time.strftime("%Y%m%d-%H%M%S")
 
-output_path = 'output/lichen-' + now + '.csv'
+output_path = '/Users/tom/Masters-Project/Lichen-Project/feature-extraction/inception-resnet-v2/output/lichen-' + now + '.csv'
 
 convert_dataset.convert_dataset(directory, targets_path, target_parser.parse, incep_res.inception_resnet_v2_features, output_path)

@@ -7,7 +7,7 @@ dir = os.path.dirname(__file__)
 lichen_images = os.path.join(dir, '../../Lichen-Images/')
 sys.path.append(lichen_images)
 
-folders = ['Physcia', 'Xanthoria']
+folders = ['Flavoparmelia']
 
 output_folder = 'Ordered'
 labels_file = 'labels.csv'
