@@ -21,13 +21,8 @@ options = dict(
             percentage=10,
         )
     ),
-    scaling = 'MaxAbsScaler'
-)
+    scaling = 'MaxAbsScaler',
 
-# maybe only hardcoded extra info goes here and leave
-# calculable things to the ouput file to print as text
-# Unused information
-# total_images
-# categories
-# transformations
-# minimum image per cat
+    # data transform factor
+    transform_factor = 0
+)
