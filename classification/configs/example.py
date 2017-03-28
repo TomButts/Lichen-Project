@@ -9,10 +9,14 @@
 
 options = dict(
     svc = dict(
-        probability=False,
+        probability=True,
         kernel="rbf",
         C=2.8,
         gamma=.0073
+    ),
+    calibration = dict(
+        cv = 2,
+        method = 'sigmoid'
     ),
     selectors = dict(
         variance_threshold = .8,

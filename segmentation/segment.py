@@ -1,9 +1,9 @@
 import numpy as np
 import cv2
 from matplotlib import pyplot as plt
-from segmentation.crop import Crop
-from segmentation import grab_cut
-from segmentation import k_means
+from crop import Crop
+import grab_cut
+import k_means
 
 img = cv2.imread("D:\Python\Lichen\images\hypogymnia.jpg")
 
@@ -50,7 +50,7 @@ roi = cv2.pyrMeanShiftFiltering(roi, 5, 60, 3)
 
 colourQuantisedImage = k_means.cluster_colours(roi, 2)
 
-segmentedImage = grab_cut.grab_cut(clonedRoi)
+# segmentedImage = grab_cut.grab_cut(clonedRoi)
 
 # OpenCV Operates in BGR so convert to RGB for matplotlib plots
 segmentedImage = cv2.cvtColor(segmentedImage, cv2.COLOR_BGR2RGB)

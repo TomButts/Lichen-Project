@@ -11,7 +11,8 @@ path, dirs, files = os.walk(directory_path).next()
 
 file_count = len(files)
 
-print(file_count)
+print('File count:\n' + file_count)
+print('\nRemember to update configs with transform factor!\n\n')
 
 widgets = [AdaptiveETA(), ' Completed: ', Percentage(), '  (', Counter(), ')']
 pbar = ProgressBar(widgets = widgets, max_value = file_count).start()
