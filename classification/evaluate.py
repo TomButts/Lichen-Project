@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 '''
-Runs sklearn scoring and metric functions
+Model Evalution:
 
 Runs analysis on the trained model saved in /classification/output/mlp
 or svc.
@@ -12,6 +12,9 @@ Args:
 
 import sys
 from tools.evaluation.load import load
+from tools.evaluation.reports.multi_class import multi_class
+from tools.evaluation.reports.probabilistic import probabilistic
+from tools.evaluation.reports.calibrated import calibrated
 
 def evaluate(directory_path, save_path=None):
     if directory_path == None:
@@ -20,9 +23,20 @@ def evaluate(directory_path, save_path=None):
 
     items = load(directory_path)
 
-    
+    if 'mlp' in items['config']:
+        model_options = items['config']['mlp']
+    else:
+        model_options = items['config']['svc']
 
-
+    if 'calibration' in items['config']:
+        # calibration only available for probabilistic models
+        calibrated()
+    elif model_options['probability']:
+        # probability model without calibration
+        probabilistic()
+    else:
+        # regular classifications
+        multi_class(items['model'], items['data'])
 
 if __name__ == "__main__":
     # get arguments

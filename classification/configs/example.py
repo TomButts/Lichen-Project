@@ -5,6 +5,7 @@
 # mlp = dict(
 #     hidden_layer_sizes=(20, 60, 30),
 #     max_iter=2000,
+#     probability=False,
 # )
 
 options = dict(
@@ -26,5 +27,3 @@ options = dict(
     # data transform factor
     transform_factor = 0
 )
-
-# /Users/tom/Masters-Project/Lichen-Project/classification/output/svc

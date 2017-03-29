@@ -2,7 +2,7 @@ import os
 import time
 import pickle
 
-def export(classifier, data, score, options, info, calibrated_clf=None):
+def export(classifier, data, options, info, calibrated_clf=None):
     if classifier.__class__.__name__ == 'mlp':
         output_path = os.path.abspath('output/mlp')
     else:
