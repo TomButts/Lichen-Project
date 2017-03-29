@@ -99,8 +99,11 @@ def onmouse(event,x,y,flags,param):
 print(__doc__)
 
 # Loading directory_path
-directory_path = sys.argv[1]
-
+if len(sys.argv) > 1:
+    directory_path = sys.argv[1]
+else:
+    print('\nMissing argument\n')
+    exit()
 index = 1
 
 # make an output directory

@@ -12,11 +12,11 @@ from configs import example as config
 from models.mlp import mlp
 from models.svc import svc
 
-from tools.data import get_data
-from tools.feature_selection import select_features
-from tools.preprocessing import scale, prepare
-from tools.output import export
-from tools.calibrate import calibrate
+from tools.training.data import get_data
+from tools.training.feature_selection import select_features
+from tools.training.preprocessing import scale, prepare
+from tools.training.output import export
+from tools.training.calibrate import calibrate
 
 from sklearn.metrics import classification_report, confusion_matrix, log_loss
 from itertools import groupby
@@ -91,4 +91,4 @@ if save_model:
         'y_test': y_test,
     }
 
-    export(clf, data, options, info, calib)
+    results_directory = export(clf, data, options, info, calib)

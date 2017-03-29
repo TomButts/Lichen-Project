@@ -9,14 +9,10 @@
 
 options = dict(
     svc = dict(
-        probability=True,
+        probability=False,
         kernel="rbf",
         C=2.8,
         gamma=.0073
-    ),
-    calibration = dict(
-        cv = 2,
-        method = 'sigmoid'
     ),
     selectors = dict(
         variance_threshold = .8,
@@ -30,3 +26,5 @@ options = dict(
     # data transform factor
     transform_factor = 0
 )
+
+# /Users/tom/Masters-Project/Lichen-Project/classification/output/svc

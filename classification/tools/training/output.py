@@ -29,6 +29,8 @@ def export(classifier, data, score, options, info, calibrated_clf=None):
     if calibrated_clf != None:
         save(calibrated_clf, 'calib', results_directory)
 
+    return results_directory
+
 def save(item, name, results_directory):
     filename = results_directory + '/' + name + '.sav'
     pickle.dump(item, open(filename, 'wb'))
