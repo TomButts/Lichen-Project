@@ -36,7 +36,7 @@ def evaluate(directory_path, save_path=None):
         probabilistic()
     else:
         # regular classifications
-        multi_class(items['model'], items['data'])
+        scores = multi_class(items['model'], items['data'])
 
 if __name__ == "__main__":
     # get arguments
