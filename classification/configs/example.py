@@ -10,7 +10,7 @@
 
 options = dict(
     svc = dict(
-        probability=False,
+        probability=True,
         kernel="rbf",
         C=2.8,
         gamma=.0073

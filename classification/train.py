@@ -64,10 +64,10 @@ if 'calibration' in options:
 # Print some intial analysis to determine
 # if output should be saved
 if model_options['probability']:
-    probability = clf.predict_proba(X_test)
+    probabilities = clf.predict_proba(X_test)
 
     print('Log Loss')
-    print(log_loss(y_test, probability))
+    print(log_loss(y_test, probabilities))
 
 predictions = clf.predict(X_test)
 

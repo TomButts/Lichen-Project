@@ -1,3 +1,0 @@
-
-def calibrated():
-    print('calib')

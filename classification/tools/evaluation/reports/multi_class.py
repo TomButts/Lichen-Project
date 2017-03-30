@@ -1,11 +1,12 @@
 from sklearn.model_selection import cross_val_score
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 
-def multi_class(classifier, data):
+def multi_class(classifier, data, scores=None):
     # Get predictions
     predictions = classifier.predict(data['X_test'])
 
-    scores = {}
+    if scores == None:
+        scores = {}
 
     # Cross Validation Score
     scores['cross_validation_mean'] = cross_validation_scores = cross_val_score(classifier, data['X'], data['y'], cv=5)
