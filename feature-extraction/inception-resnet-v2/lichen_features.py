@@ -21,4 +21,6 @@ now = time.strftime("%Y%m%d-%H%M%S")
 
 output_path = '/Users/tom/Masters-Project/Lichen-Project/feature-extraction/inception-resnet-v2/output/lichen-' + now + '.csv'
 
+print('\nSaving to:\n' + output_path)
+
 convert_dataset.convert_dataset(directory, targets_path, target_parser.parse, incep_res.inception_resnet_v2_features, output_path)

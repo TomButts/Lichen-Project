@@ -3,7 +3,7 @@ import transform as t
 from skimage.io import imsave
 from progressbar import AdaptiveETA, ProgressBar, Percentage, Counter
 
-directory_path = os.path.abspath('../../Lichen-Images/Test')
+directory_path = os.path.abspath('../../Lichen-Images/Classes/Physcia')
 
 index = 0
 
@@ -11,8 +11,14 @@ path, dirs, files = os.walk(directory_path).next()
 
 file_count = len(files)
 
-print('File count:\n' + file_count)
+print('File count:\n' + str(file_count))
 print('\nRemember to update configs with transform factor!\n\n')
+
+output_directory = directory_path + '/output'
+output_directory = os.path.normpath(output_directory)
+
+if os.path.isdir(output_directory) == False:
+    os.mkdir(output_directory)
 
 widgets = [AdaptiveETA(), ' Completed: ', Percentage(), '  (', Counter(), ')']
 pbar = ProgressBar(widgets = widgets, max_value = file_count).start()
@@ -21,7 +27,7 @@ for filename in os.listdir(directory_path):
     if filename.endswith(".jpeg") or filename.endswith(".jpg"):
         image = t.transform(directory_path + '/' + filename)
 
-        transform_path = directory_path + '/transform-' + str(index) + '.jpg'
+        transform_path = output_directory + '/transform-' + str(index) + '.jpg'
 
         imsave(transform_path, image)
 

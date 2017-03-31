@@ -1,11 +1,5 @@
-from sklearn.metrics import roc_curve, auc, log_loss
+from sklearn.metrics import log_loss
 from sklearn.model_selection import cross_val_score
-from sklearn.model_selection import StratifiedKFold
-
-import numpy as np
-from scipy import interp
-import matplotlib.pyplot as plt
-from itertools import cycle
 
 def probabilistic(classifier, data, options):
     scores = {}
@@ -23,7 +17,5 @@ def probabilistic(classifier, data, options):
         (scores['neg_log_loss'][0],
          scores['neg_log_loss'][1],
          scores['neg_log_loss'][2]))
-
-    # TODO check config and do calibration metrics
 
     return scores

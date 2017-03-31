@@ -7,10 +7,10 @@ dir = os.path.dirname(__file__)
 lichen_images = os.path.join(dir, '../../Lichen-Images/')
 sys.path.append(lichen_images)
 
-folders = ['Flavoparmelia']
+folders = ['Physcia_II', 'Xanthoria_II']
 
 output_folder = 'Ordered'
-labels_file = 'labels.csv'
+labels_file = output_folder + '/labels.csv'
 
 labels_csv = open(lichen_images + labels_file, 'wb')
 
@@ -23,7 +23,7 @@ image_number = 1
 
 for folder in folders:
     for filename in os.listdir(lichen_images + folder):
-        if filename.endswith(".jpg") or filename.endswith(".NEF") or filename.endswith(".jpeg"):
+        if filename.endswith(".jpg") or filename.endswith(".NEF") or filename.endswith(".jpeg") or filename.endswith(".JPG"):
             # rename image in output folder
             shutil.copy(lichen_images + folder + '/' + filename, lichen_images + output_folder + '/image_' + str(image_number).zfill(4) + '.jpg')
 

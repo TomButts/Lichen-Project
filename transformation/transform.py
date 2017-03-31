@@ -12,9 +12,9 @@ def transform(image_path):
         image = np.fliplr(image)
 
     # rotate
-    degrees = uniform(0, 360)
+    degrees = choice([90, 180, 270])
 
-    image = rotate(image, degrees)
+    image = rotate(image, degrees, resize=True)
 
     # scale
     scale = uniform(0.75, 1.25)
