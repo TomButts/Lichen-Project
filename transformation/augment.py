@@ -1,41 +1,24 @@
-import os, os.path
-import transform as t
-from skimage.io import imsave
-from progressbar import AdaptiveETA, ProgressBar, Percentage, Counter
+from skimage.transform import rotate, rescale
+import matplotlib.pyplot as plt
+from random import uniform, randint, choice
+from skimage.io import imread
+import numpy as np
 
-directory_path = os.path.abspath('../../Lichen-Images/Classes/Physcia')
+def augment(image_path):
+    image = imread(image_path)
 
-index = 0
+    # random flip
+    if choice([True, False]):
+        image = np.fliplr(image)
 
-path, dirs, files = os.walk(directory_path).next()
+    # rotate
+    degrees = choice([90, 180, 270])
 
-file_count = len(files)
+    image = rotate(image, degrees, resize=True)
 
-print('File count:\n' + str(file_count))
-print('\nRemember to update configs with transform factor!\n\n')
+    # scale
+    scale = uniform(0.75, 1.25)
 
-output_directory = directory_path + '/output'
-output_directory = os.path.normpath(output_directory)
+    image = rescale(image, scale)
 
-if os.path.isdir(output_directory) == False:
-    os.mkdir(output_directory)
-
-widgets = [AdaptiveETA(), ' Completed: ', Percentage(), '  (', Counter(), ')']
-pbar = ProgressBar(widgets = widgets, max_value = file_count).start()
-
-for filename in os.listdir(directory_path):
-    if filename.endswith(".jpeg") or filename.endswith(".jpg"):
-        image = t.transform(directory_path + '/' + filename)
-
-        transform_path = output_directory + '/transform-' + str(index) + '.jpg'
-
-        imsave(transform_path, image)
-
-        index += 1
-
-        pbar.update(index)
-        continue
-    else:
-        continue
-
-pbar.finish()
+    return image
