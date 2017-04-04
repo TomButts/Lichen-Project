@@ -4,12 +4,12 @@ import csv
 import shutil
 
 dir = os.path.dirname(__file__)
-lichen_images = os.path.join(dir, '../../Lichen-Images/')
+lichen_images = os.path.join(dir, '../../Lichen-Images/Datasets/datatset-01-04-17/transformed-classes-2/')
 sys.path.append(lichen_images)
 
-folders = ['Physcia_II', 'Xanthoria_II']
+folders = ['Xanthoria']
 
-output_folder = 'Ordered'
+output_folder = 'Xanthoria-Ordered'
 labels_file = output_folder + '/labels.csv'
 
 labels_csv = open(lichen_images + labels_file, 'wb')

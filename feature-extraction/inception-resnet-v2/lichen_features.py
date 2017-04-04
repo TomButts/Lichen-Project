@@ -10,16 +10,13 @@ import convert_dataset
 import parse_csv as target_parser
 import time
 
-# enable long console output
-# np.set_printoptions(threshold = sys.maxint)
-
-directory = '/Users/tom/Masters-Project/Lichen-Images/Ordered'
+directory = '/Users/tom/Masters-Project/Lichen-Images/Datasets/datatset-01-04-17/transformed-classes-2/Xanthoria-Ordered'
 
 targets_path = directory + '/labels.csv'
 
 now = time.strftime("%Y%m%d-%H%M%S")
 
-output_path = '/Users/tom/Masters-Project/Lichen-Project/feature-extraction/inception-resnet-v2/output/lichen-' + now + '.csv'
+output_path = '/Users/tom/Masters-Project/Lichen-Images/Datasets/datatset-01-04-17/transformed-classes-2/Xanthoria-' + now + '.csv'
 
 print('\nSaving to:\n' + output_path)
 

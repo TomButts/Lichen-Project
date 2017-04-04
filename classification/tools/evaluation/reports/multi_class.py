@@ -17,7 +17,7 @@ def multi_class(classifier, data, scores=None):
     print("\nClassification Percentage: %0.2f\n" % (scores['accuracy_score'] * 100))
 
     # Classification Report
-    target_names = ['Physcia', 'Xanthoria', 'Flavoparmelia']
+    target_names = ['Physcia', 'Xanthoria', 'Flavoparmelia', 'Evernia']
     scores['classification_report'] = classification_report(data['y_test'], predictions, target_names=target_names)
     print(scores['classification_report'])
 

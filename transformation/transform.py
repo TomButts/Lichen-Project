@@ -4,7 +4,7 @@ import getopt
 from skimage.io import imsave
 from progressbar import AdaptiveETA, ProgressBar, Percentage, Counter
 
-def transform(directory_path, function):
+def transform(directory_path, function, repeat=None):
     index = 0
 
     path, dirs, files = os.walk(directory_path).next()
@@ -20,20 +20,28 @@ def transform(directory_path, function):
     if os.path.isdir(output_directory) == False:
         os.mkdir(output_directory)
 
+    if repeat != None:
+        # Make the progress bar accurate
+        file_count = file_count * repeat
+
     widgets = [AdaptiveETA(), ' Completed: ', Percentage(), '  (', Counter(), ')']
     pbar = ProgressBar(widgets = widgets, max_value = file_count).start()
 
     for filename in os.listdir(directory_path):
         if filename.endswith(".jpeg") or filename.endswith(".jpg") or filename.endswith(".JPG"):
-            image = function(directory_path + '/' + filename)
-
-            transform_path = output_directory + '/' + function.__name__ + '-' + str(index) + '.jpg'
-
-            imsave(transform_path, image)
-
-            index += 1
-
-            pbar.update(index)
+            if repeat == None:
+                image = function(directory_path + '/' + filename)
+                transform_path = output_directory + '/' + function.__name__ + '-' + str(index) + '.jpg'
+                imsave(transform_path, image)
+                index += 1
+                pbar.update(index)
+            elif repeat > 1:
+                for _ in range(repeat):
+                    image = function(directory_path + '/' + filename)
+                    transform_path = output_directory + '/' + function.__name__ + '-' + str(index) + '.jpg'
+                    imsave(transform_path, image)
+                    index += 1
+                    pbar.update(index)
             continue
         else:
             continue
@@ -57,7 +65,7 @@ if __name__ == "__main__":
     for opt, arg in options:
         if opt in ('-a'):
             from augment import augment
-            transform(arg, augment)
+            transform(arg, augment, 2)
         elif opt in ('-r'):
             from rescale import adjust_size
             transform(arg, adjust_size)

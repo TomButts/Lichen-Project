@@ -25,7 +25,7 @@ options = config.options
 
 info = {}
 
-X, y = get_data('/Users/tom/Masters-Project/Output-Files/lichen.csv')
+X, y = get_data('/Users/tom/Masters-Project/Lichen-Images/Datasets/datatset-01-04-17/transformed-classes-2/dataset-01-04-17.csv')
 
 info['total'] = len(y)
 info['classes'] = len(set(y))

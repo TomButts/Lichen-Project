@@ -12,8 +12,10 @@ def probabilistic(classifier, data, options):
 
     scores['neg_log_loss'] = cross_val_score(
         classifier, data['X'], data['y'], scoring="neg_log_loss")
+
+    print(scores['neg_log_loss'])
     print(
-        "\nNeg Log Losses:\n\nPyschia: %0.3f\nXanthoria: %0.3f\nFlavoparmelia: %0.3f\n" %
+        "\nNeg Log Losses:\n\nCrossVal1: %0.3f\nCrossVal2: %0.3f\nCrossVal3: %0.3f\n" %
         (scores['neg_log_loss'][0],
          scores['neg_log_loss'][1],
          scores['neg_log_loss'][2]))

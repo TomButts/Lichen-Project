@@ -3,7 +3,7 @@ import time
 import pickle
 
 def export(classifier, data, options, info, calibrated_clf=None):
-    if classifier.__class__.__name__ == 'mlp':
+    if classifier.__class__.__name__ == 'MLPClassifier':
         output_path = os.path.abspath('output/mlp')
     else:
         output_path = os.path.abspath('output/svc')
