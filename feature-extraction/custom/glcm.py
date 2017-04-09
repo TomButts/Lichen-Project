@@ -12,7 +12,7 @@ def glcm_features(image, modes=None):
     features = []
 
     # get the grey level co occurence matrix
-    glcm = greycomatrix(image, [5], [0], 256, symmetric=True, normed=True)
+    glcm = greycomatrix(image, [1], [0], 256, symmetric=True, normed=True)
 
     for mode in modes:
         # analyse the matrix for feature data

@@ -16,19 +16,20 @@
 # ),
 
 options = dict(
-    mlp = dict(
-        hidden_layer_sizes=(20, 60, 30),
-        max_iter=2000,
+    svc = dict(
         probability=True,
+        kernel="rbf",
+        C=2.8,
+        gamma=.0073
     ),
     selectors = dict(
-        variance_threshold = .8,
+        variance_threshold = .1,
         feature_percentile = dict(
             mode='f_classif',
             percentage=10,
         )
     ),
-    scaling = 'StandardScaler',
+    scaling = 'MaxAbsScaler',
 
     # data transform factor
     transform_factor = 0

@@ -1,8 +1,9 @@
-import configs.example1 as config
+from configs import example1
 import glcm
 from skimage.feature import ORB
 from skimage.color import rgb2grey
 from skimage.io import imread
+from sklearn.cluster import KMeans
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -14,6 +15,10 @@ utils_path = os.path.join(dir, '../../utils')
 sys.path.append(utils_path)
 
 import flatten
+
+options = example1.options
+
+np.set_printoptions(threshold = sys.maxint)
 
 def features(image_path):
     """Extracts a set of features (described in config file) from an image.
@@ -28,20 +33,20 @@ def features(image_path):
 
     image = imread(image_path)
 
-    if config.grey_required:
+    if 'grey_required' in options:
         grey_image = rgb2grey(image)
 
     # GLCM features
-    if config.glcm:
-        glcm_config = config.glcm
+    if 'glcm' in options:
+        glcm_config = options['glcm']
 
         glcm_features = glcm.glcm_features(grey_image, glcm_config['modes'])
 
         features.append(glcm_features)
 
     # ORB features
-    if config.orb:
-        orb_config = config.orb
+    if 'orb' in options:
+        orb_config = options['orb']
 
         orb_extractor = ORB(
             downscale=orb_config['downscale'],
@@ -56,5 +61,16 @@ def features(image_path):
         features.append(orb_extractor.keypoints.tolist())
 
         # features.append(orb_extractor.descriptors.tolist())
+
+    if 'kmeans' in options:
+        k_image = np.array(image, dtype=np.float64) / 255
+
+        w, h, d = original_shape = tuple(k_image.shape)
+        assert d == 3
+        image_array = np.reshape(k_image, (w * h, d))
+
+        kmeans = KMeans(n_clusters=options['kmeans']['clusters']).fit(image_array)
+
+        features.append(kmeans.cluster_centers_.tolist())
 
     return list(flatten.flatten(features))
