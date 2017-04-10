@@ -23,7 +23,7 @@ options = dict(
         gamma=.0073
     ),
     selectors = dict(
-        variance_threshold = .1,
+        variance_threshold = .8,
         feature_percentile = dict(
             mode='f_classif',
             percentage=10,

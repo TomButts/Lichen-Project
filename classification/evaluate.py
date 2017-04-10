@@ -7,7 +7,15 @@ or svc.
 
 Args:
     directory_path: which folder to run on
-    save_path: optional save path, defaults to /classification/output/evaluations directory
+    mode: leave blank for single folder
+
+Command line tool:
+Can be used in normal -n and loop -l mode.
+Argument is directory_path to training data
+
+For usage details:
+python evaluate.py -u
+============================
 '''
 
 import sys
@@ -15,6 +23,7 @@ import os
 import getopt
 
 from tools.evaluation.load import load
+from tools.evaluation.write import write_scores_csv
 from tools.evaluation.reports.multi_class import multi_class
 from tools.evaluation.reports.probabilistic import probabilistic
 
@@ -33,7 +42,7 @@ def evaluate(directory_path, mode=None):
 
     if model_options['probability']:
         # probability model without calibration
-        scores = probabilistic(items['model'], items['data'], items['config'])
+        scores = probabilistic(items['model'], items['data'], items['config'], mode)
 
     # regular classifications
     scores = multi_class(items['model'], items['data'], scores, mode)
@@ -42,6 +51,7 @@ def evaluate(directory_path, mode=None):
 
 def usage():
     print("\nEvaluation Tool\n")
+    print("Arg1: must be a path to a directory containing saved training data\n")
     print("Options")
     print("-n: normal mode")
     print("-l: loop mode\n")
@@ -51,21 +61,25 @@ def usage():
 
 if __name__ == "__main__":
     try:
-        options, remainder = getopt.getopt(sys.argv[1:], 'n:l:')
+        options, remainder = getopt.getopt(sys.argv[1:], 'n:l:u:')
+
+        for opt, arg in options:
+            if opt in ('-n'):
+                evaluate(arg)
+                exit()
+            elif opt in ('-u'):
+                usage()
+                exit()
+            elif opt in ('-l'):
+                csv_scores = []
+
+                for subdir, dirs, _ in os.walk(arg):
+                    if subdir != arg:
+                        csv_scores.append(evaluate(subdir, mode='loop'))
+
+                write_scores_csv(csv_scores)
+                exit()
     except getopt.GetoptError as err:
-         print(err)
+         # print(err)
          usage()
          exit()
-
-    for opt, arg in options:
-        if opt in ('-n'):
-            evaluate(arg)
-        elif opt in ('-l'):
-            csv_scores = []
-
-            for subdir, dirs, _ in os.walk(arg):
-                if subdir != arg:
-                    csv_scores.append(evaluate(subdir, mode='loop'))
-
-                    # TODO create a func in tools that sorts through this heap of shit
-                    # and writes it nicely into a csv
