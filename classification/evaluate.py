@@ -27,8 +27,9 @@ from tools.evaluation.write import write_scores_csv
 from tools.evaluation.reports.multi_class import multi_class
 from tools.evaluation.reports.probabilistic import probabilistic
 
+
 def evaluate(directory_path, mode=None):
-    if directory_path == None:
+    if directory_path is None:
         print('\nA directory with model and training data is required')
         exit()
 
@@ -42,7 +43,11 @@ def evaluate(directory_path, mode=None):
 
     if model_options['probability']:
         # probability model without calibration
-        scores = probabilistic(items['model'], items['data'], items['config'], mode)
+        scores = probabilistic(
+            items['model'],
+            items['data'],
+            items['config'],
+            mode)
 
     # regular classifications
     scores = multi_class(items['model'], items['data'], scores, mode)
@@ -58,6 +63,7 @@ def usage():
     print("Normal mode evaluates a single folder full of training data (config, data, model and info.sav). ")
     print("Results are printed to terminal\n")
     print("Loop mode loops through a folder of results folders and writes the evaluation data to a csv file.")
+
 
 if __name__ == "__main__":
     try:
@@ -80,6 +86,6 @@ if __name__ == "__main__":
                 write_scores_csv(csv_scores)
                 exit()
     except getopt.GetoptError as err:
-         # print(err)
-         usage()
-         exit()
+        # print(err)
+        usage()
+        exit()

@@ -1,6 +1,7 @@
 import pickle
 import os
 
+
 def load(directory_path):
     """Load all pickled files in folder
 
@@ -17,6 +18,7 @@ def load(directory_path):
             # name the object after the file without extension
             item = os.path.splitext(filename)[0]
 
-            items[item] = pickle.load(open(directory_path + '/' + filename, 'rb'))
+            items[item] = pickle.load(
+                open(directory_path + '/' + filename, 'rb'))
 
     return items

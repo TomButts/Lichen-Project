@@ -22,11 +22,19 @@ def write_scores_csv(scores):
     index = 1
 
     for dictionary in scores:
-        row = [ index, dictionary['cross_val_f1'].mean(), dictionary['cross_val_f1'].std(), len(dictionary['cross_val_f1']),
-                dictionary['cross_val_precision'].mean(), dictionary['cross_val_precision'].std(), len(dictionary['cross_val_precision']),
-                dictionary['cross_val_recall'].mean(), dictionary['cross_val_recall'].std(), len(dictionary['cross_val_recall']),
-                dictionary['cross_val_accuracy'].mean(), dictionary['cross_val_accuracy'].std(), len(dictionary['cross_val_accuracy'])]
-
+        row = [index,
+               dictionary['cross_val_f1'].mean(),
+               dictionary['cross_val_f1'].std(),
+               len(dictionary['cross_val_f1']),
+               dictionary['cross_val_precision'].mean(),
+               dictionary['cross_val_precision'].std(),
+               len(dictionary['cross_val_precision']),
+               dictionary['cross_val_recall'].mean(),
+               dictionary['cross_val_recall'].std(),
+               len(dictionary['cross_val_recall']),
+               dictionary['cross_val_accuracy'].mean(),
+               dictionary['cross_val_accuracy'].std(),
+               len(dictionary['cross_val_accuracy'])]
 
         if 'neg_log_loss' in dictionary:
             row.append(dictionary['neg_log_loss'].mean())
@@ -34,5 +42,5 @@ def write_scores_csv(scores):
             row.append(len(dictionary['neg_log_loss']))
 
         writer.writerow(row)
-        
+
         index += 1

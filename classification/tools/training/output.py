@@ -2,11 +2,12 @@ import os
 import time
 import pickle
 
+
 def export(classifier, data, options, info, calibrated_clf=None):
     if classifier.__class__.__name__ == 'MLPClassifier':
         output_path = os.path.abspath('output/mlp')
     else:
-        output_path = os.path.abspath('output/svc')
+        output_path = os.path.abspath('output/svc/c-value/CNN')
 
     # print(output_path)
     now = time.strftime("%d-%b-%H%M%S")
@@ -26,10 +27,11 @@ def export(classifier, data, options, info, calibrated_clf=None):
 
     save(info, 'info', results_directory)
 
-    if calibrated_clf != None:
+    if calibrated_clf is not None:
         save(calibrated_clf, 'calib', results_directory)
 
     return results_directory
+
 
 def save(item, name, results_directory):
     filename = results_directory + '/' + name + '.sav'

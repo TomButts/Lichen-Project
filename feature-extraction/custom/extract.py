@@ -10,7 +10,7 @@ import parse_csv as target_parser
 import time
 import features
 
-directory = os.path.abspath('../../../Lichen-Images/Datasets/datatset-01-04-17/seg-res-classes/Ordered')
+directory = os.path.abspath('../../../Lichen-Images/Datasets/datatset-01-04-17/seg-tr-classes/Ordered')
 
 targets_path = directory + '/labels.csv'
 

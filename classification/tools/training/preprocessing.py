@@ -2,6 +2,7 @@ from sklearn.preprocessing import StandardScaler, MaxAbsScaler
 from sklearn.model_selection import train_test_split
 from sklearn.utils import shuffle
 
+
 def scale(data, scaling_type):
     """Scale the training data
 
@@ -22,6 +23,7 @@ def scale(data, scaling_type):
     # TODO: min max
 
     return data
+
 
 def prepare(data, targets):
     """Prepare the data
