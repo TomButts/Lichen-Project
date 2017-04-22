@@ -1,7 +1,6 @@
 from sklearn.feature_selection import VarianceThreshold, SelectPercentile
 import sklearn.feature_selection as selection
 
-
 def select_features(features, targets, options):
     if 'variance_threshold' in options:
         sel = VarianceThreshold(threshold=(
@@ -17,6 +16,6 @@ def select_features(features, targets, options):
 
         selector.fit(features, targets)
 
-        selector.transform(features)
+        features = selector.transform(features)
 
     return features, targets

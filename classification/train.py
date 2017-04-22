@@ -7,7 +7,7 @@ sys.path.append(utils_path)
 
 import yes_no_prompt
 
-from configs import svc_model as config
+from configs import mlp_model as config
 
 from models.mlp import mlp
 from models.svc import svc
@@ -29,7 +29,7 @@ info = {}
 # /Users/tom/Masters-Project/Lichen-Images/Datasets/datatset-01-04-17/transformed-classes-2/dataset-01-04-17.csv
 
 X, y = get_data(
-    '/Users/tom/Masters-Project/Lichen-Project/feature-extraction/custom/output/lichen-20170410-165620.csv')
+    '/Users/tom/Masters-Project/Lichen-Images/Datasets/datatset-01-04-17/transformed-classes-2/dataset-01-04-17.csv')
 
 info['total'] = len(y)
 info['classes'] = len(set(y))
@@ -41,7 +41,6 @@ for unique in set(y):
 
 info['count'] = count
 
-# TODO check these operations are passing back the transformed shit
 if 'selectors' in options:
     X, y = select_features(X, y, options['selectors'])
 

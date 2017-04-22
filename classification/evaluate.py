@@ -27,7 +27,6 @@ from tools.evaluation.write import write_scores_csv
 from tools.evaluation.reports.multi_class import multi_class
 from tools.evaluation.reports.probabilistic import probabilistic
 
-
 def evaluate(directory_path, mode=None):
     if directory_path is None:
         print('\nA directory with model and training data is required')

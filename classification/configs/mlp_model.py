@@ -1,7 +1,7 @@
 options = dict(
     mlp = dict(
-        hidden_layer_sizes=(30,30,30,30,30,30),
-        max_iter=100,
+        hidden_layer_sizes=(35,35),
+        max_iter=150,
         probability=True,
     ),
     scaling = 'StandardScaler',
