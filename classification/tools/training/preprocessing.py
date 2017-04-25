@@ -20,8 +20,6 @@ def scale(data, scaling_type):
 
         data = max_abs_scaler.fit_transform(data)
 
-    # TODO: min max
-
     return data
 
 

@@ -1,21 +1,32 @@
 from sklearn.feature_selection import VarianceThreshold, SelectPercentile
 import sklearn.feature_selection as selection
 
-def select_features(features, targets, options):
+def fit_selectors(features, targets, options):
+    variance_threshold_selector = None
+    percentile_selector = None
+
     if 'variance_threshold' in options:
-        sel = VarianceThreshold(threshold=(
+        variance_threshold_selector = VarianceThreshold(threshold=(
             options['variance_threshold'] * (1 - options['variance_threshold'])))
 
-        features = sel.fit_transform(features)
+        features = variance_threshold_selector.fit_transform(features)
 
     if 'feature_percentile' in options:
+        # load the feature fitness algorithm module
         module = getattr(selection, options['feature_percentile']['mode'])
 
-        selector = SelectPercentile(
+        percentile_selector = SelectPercentile(
             module, percentile=options['feature_percentile']['percentage'])
 
-        selector.fit(features, targets)
+        percentile_selector.fit(features, targets)
 
-        features = selector.transform(features)
+    return variance_threshold_selector, percentile_selector
 
-    return features, targets
+def transform_features(features, variance_threshold_selector=None, percentile_selector=None):
+    if variance_threshold_selector != None:
+        features = variance_threshold_selector.transform(features)
+
+    if percentile_selector != None:
+        features  = percentile_selector.transform(features)
+
+    return features

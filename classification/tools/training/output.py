@@ -3,7 +3,7 @@ import time
 import pickle
 
 
-def export(classifier, data, options, info, calibrated_clf=None):
+def export(classifier, data, selectors, options, info, calibrated_clf=None):
     if classifier.__class__.__name__ == 'MLPClassifier':
         output_path = os.path.abspath('output/mlp')
     else:
@@ -22,6 +22,8 @@ def export(classifier, data, options, info, calibrated_clf=None):
     save(data, 'data', results_directory)
 
     save(classifier, 'model', results_directory)
+
+    save(selectors, 'selectors', results_directory)
 
     save(options, 'config', results_directory)
 

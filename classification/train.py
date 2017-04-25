@@ -13,7 +13,7 @@ from models.mlp import mlp
 from models.svc import svc
 
 from tools.training.data import get_data
-from tools.training.feature_selection import select_features
+from tools.training.feature_selection import fit_selectors, transform_features
 from tools.training.preprocessing import scale, prepare
 from tools.training.output import export
 from tools.training.calibrate import calibrate
@@ -21,18 +21,28 @@ from tools.training.calibrate import calibrate
 from sklearn.metrics import classification_report, confusion_matrix, log_loss
 from itertools import groupby
 
+import numpy as np
+
 options = config.options
 
 info = {}
 
 # /Users/tom/Masters-Project/Lichen-Project/feature-extraction/custom/output/lichen-20170410-165620.csv
 # /Users/tom/Masters-Project/Lichen-Images/Datasets/datatset-01-04-17/transformed-classes-2/dataset-01-04-17.csv
+#
+# /Users/tom/Masters-Project/Lichen-Images/Datasets/datatset-01-04-17/transformed-classes-2/Split-Dataset/train-0.7-val-0.3
+# /Users/tom/Masters-Project/Lichen-Images/Datasets/datatset-01-04-17/transformed-classes-2/Split-Dataset/train-0.7-validation-0.3/validation.csv
+#
 
 X, y = get_data(
-    '/Users/tom/Masters-Project/Lichen-Images/Datasets/datatset-01-04-17/transformed-classes-2/dataset-01-04-17.csv')
+    '/Users/tom/Masters-Project/Lichen-Images/Datasets/datatset-01-04-17/transformed-classes-2/Split-Dataset/train-0.7-val-0.3/train.csv')
+
+X_val, y_val = get_data(
+    '/Users/tom/Masters-Project/Lichen-Images/Datasets/datatset-01-04-17/transformed-classes-2/Split-Dataset/train-0.7-val-0.3/validation.csv')
 
 info['total'] = len(y)
 info['classes'] = len(set(y))
+info['class_names'] = ['Physcia', 'Xanthoria', 'Flavoparmelia', 'Evernia']
 
 count = {}
 
@@ -41,11 +51,20 @@ for unique in set(y):
 
 info['count'] = count
 
+selectors = None
+
 if 'selectors' in options:
-    X, y = select_features(X, y, options['selectors'])
+    variance_threshold_selector, percentile_selector = fit_selectors(X, y, options['selectors'])
+
+    X = transform_features(X, variance_threshold_selector, percentile_selector)
+
+    X_val = transform_features(X_val, variance_threshold_selector, percentile_selector)
+
+    selectors = {'variance': variance_threshold_selector, 'percentile': percentile_selector}
 
 if 'scaling' in options:
     X = scale(X, options['scaling'])
+    X_val = scale(X_val, options['scaling'])
 
 X_train, X_test, y_train, y_test = prepare(X, y)
 
@@ -67,17 +86,17 @@ if 'calibration' in options:
 # Print some intial analysis to determine
 # if output should be saved
 if model_options['probability']:
-    probabilities = clf.predict_proba(X_test)
+    probabilities = clf.predict_proba(X_val)
 
     print('Log Loss')
-    print(log_loss(y_test, probabilities))
+    print(log_loss(y_val, probabilities))
 
-predictions = clf.predict(X_test)
+predictions = clf.predict(X_val)
 
 print('\nconfusion matrix:')
-print(confusion_matrix(y_test, predictions))
+print(confusion_matrix(y_val, predictions))
 print('\nclassification report:\n')
-print(classification_report(y_test, predictions))
+print(classification_report(y_val, predictions))
 print('\ndata info:')
 print(info)
 
@@ -92,6 +111,8 @@ if save_model:
         'X_test': X_test,
         'y_train': y_train,
         'y_test': y_test,
+        'X_val': X_val,
+        'y_val': y_val,
     }
 
-    results_directory = export(clf, data, options, info, calib)
+    results_directory = export(clf, data, selectors, options, info, calib)
