@@ -2,9 +2,16 @@ from sklearn.neural_network import MLPClassifier
 
 def mlp(training_data, training_targets, options):
 
-    mlp = MLPClassifier(hidden_layer_sizes=options['hidden_layer_sizes'], max_iter=options['max_iter'])
-
     print("Fitting MLP Classifier:\n")
-    mlp.fit(training_data, training_targets)
+
+    for score in options['scoring_strategies']:
+        if score == 'neg_log_loss' and options['probability'] == False:
+            print('Model must be trained in probability mode for neg_log_loss gridsearch strategy')
+        else:
+            classifier = GridSearchCV(SVC(C=1), options['tuned_parameters'], cv=5, scoring=score)
+
+            classifier.fit(training_data, training_targets)
+
+            svc[score] = classifier
 
     return mlp

@@ -7,7 +7,7 @@ sys.path.append(utils_path)
 
 import yes_no_prompt
 
-from configs import mlp_model as config
+from configs import svc_model as config
 
 from models.mlp import mlp
 from models.svc import svc
@@ -32,7 +32,6 @@ info = {}
 #
 # /Users/tom/Masters-Project/Lichen-Images/Datasets/datatset-01-04-17/transformed-classes-2/Split-Dataset/train-0.7-val-0.3
 # /Users/tom/Masters-Project/Lichen-Images/Datasets/datatset-01-04-17/transformed-classes-2/Split-Dataset/train-0.7-validation-0.3/validation.csv
-#
 
 X, y = get_data(
     '/Users/tom/Masters-Project/Lichen-Images/Datasets/datatset-01-04-17/transformed-classes-2/Split-Dataset/train-0.7-val-0.3/train.csv')
@@ -76,22 +75,16 @@ if 'mlp' in options:
     clf = mlp(X_train, y_train, options['mlp'])
 else:
     model_options = options['svc']
-    clf = svc(X_train, y_train, options['svc'])
+    classifiers = svc(X_train, y_train, model_options)
 
-calib = None
-
-if 'calibration' in options:
-    calib = calibrate(clf, X_train, y_train, options['calibration'])
-
-# Print some intial analysis to determine
-# if output should be saved
+# Print some intial analysis
 if model_options['probability']:
-    probabilities = clf.predict_proba(X_val)
+    probabilities = classifiers['neg_log_loss'].predict_proba(X_val)
 
     print('Log Loss')
     print(log_loss(y_val, probabilities))
 
-predictions = clf.predict(X_val)
+predictions = classifiers['accuracy'].predict(X_val)
 
 print('\nconfusion matrix:')
 print(confusion_matrix(y_val, predictions))

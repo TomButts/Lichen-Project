@@ -17,10 +17,12 @@
 
 options = dict(
     svc = dict(
-        probability=True,
-        kernel="rbf",
-        C=2.8,
-        gamma=.0073
+        tuned_parameters = [
+            {'kernel': ['rbf'], 'gamma': [1e-3, 1e-4], 'C': [1, 10, 100, 1000], 'probability': True},
+            {'kernel': ['linear'], 'C': [1, 10, 100, 1000], 'probability': True}
+        ],
+        scoring_strategies = ['f1_macro', 'accuracy_score', 'neg_log_loss'],
+        probability = True
     ),
     selectors = dict(
         variance_threshold = .8,
