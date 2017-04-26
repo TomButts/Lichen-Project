@@ -1,8 +1,12 @@
 options = dict(
     mlp = dict(
-        hidden_layer_sizes=(110,60),
-        max_iter=350,
-        probability=True,
+        tuned_parameters = [
+            {'solver': ['sgd'], 'alpha': [0.01, 0.1, 1, 10, 100, 1000]},
+            {'solver': ['lbfgs'], 'alpha': [0.01, 0.1, 1, 10, 100, 1000]},
+            {'solver': ['adam'], 'alpha': [0.01, 0.1, 1, 10, 100, 1000]}
+        ],
+        scoring_strategies = ['f1_macro', 'accuracy', 'neg_log_loss'],
+        probability = True
     ),
     selectors = dict(
         variance_threshold = .8,

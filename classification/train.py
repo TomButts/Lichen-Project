@@ -7,7 +7,7 @@ sys.path.append(utils_path)
 
 import yes_no_prompt
 
-from configs import svc_model as config
+from configs import mlp_model as config
 
 from models.mlp import mlp
 from models.svc import svc
@@ -16,7 +16,6 @@ from tools.training.data import get_data
 from tools.training.feature_selection import fit_selectors, transform_features
 from tools.training.preprocessing import scale, prepare
 from tools.training.output import export
-from tools.training.calibrate import calibrate
 
 from sklearn.metrics import classification_report, confusion_matrix, log_loss
 from itertools import groupby
@@ -72,7 +71,7 @@ info['test'] = len(y_test)
 
 if 'mlp' in options:
     model_options = options['mlp']
-    clf = mlp(X_train, y_train, options['mlp'])
+    classifiers = mlp(X_train, y_train, model_options)
 else:
     model_options = options['svc']
     classifiers = svc(X_train, y_train, model_options)
@@ -108,4 +107,4 @@ if save_model:
         'y_val': y_val,
     }
 
-    results_directory = export(clf, data, selectors, options, info, calib)
+    results_directory = export(classifiers, data, selectors, options, info)

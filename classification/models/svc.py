@@ -1,12 +1,11 @@
 from sklearn.svm import SVC
-from sklearn.calibration import CalibratedClassifierCV
 from sklearn.model_selection import GridSearchCV
 
 def svc(training_data, training_targets, options):
     svc = {}
 
     print("Fitting SVC Classifier:\n")
-    
+
     for score in options['scoring_strategies']:
         if score == 'neg_log_loss' and options['probability'] == False:
             print('Model must be trained in probability mode for neg_log_loss gridsearch strategy')
