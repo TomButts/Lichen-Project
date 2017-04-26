@@ -49,8 +49,6 @@ def dataset_info(training_data, training_targets, validation_data, validation_ta
     info['training']['features'] = len(training_data[0])
     info['validation']['features'] = len(validation_data[0])
 
-    print(info)
-
     return info
 
 def post_processing_info(info, training_data, training_targets, testing_targets, validation_data):
@@ -73,8 +71,6 @@ def post_processing_info(info, training_data, training_targets, testing_targets,
     testing_class_count = count_unique(testing_targets, info['class_names'])
 
     info['training']['test'] = testing_class_count
-
-    print(info)
 
     return info
 

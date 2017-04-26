@@ -28,6 +28,9 @@ def export(classifiers, data, selectors, options, info):
         # Save the trained models
         save(classifier.best_estimator_, name, results_directory)
 
+        # Save grid search config
+        save(classifier.cv_results_, name + '_grid', results_directory)
+
         # Save parameters for results
         best_parameters[name] = {'test': classifier.best_params_, 'all': classifier.best_estimator_.get_params()}
 

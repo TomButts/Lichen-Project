@@ -1,9 +1,6 @@
 import csv
 
 def write_dataset_info(info, directory_path):
-    print(info)
-    print(directory_path)
-
     output_path = directory_path + '/info.csv'
 
     evaluation_csv = open(output_path, 'wb')
@@ -14,13 +11,13 @@ def write_dataset_info(info, directory_path):
     headers = info['class_names'][:]
 
     # add first column header
-    headers.insert(0, 'set')
+    headers.insert(0, 'Dataset')
 
     writer.writerow(headers)
 
-    train_row = ['train']
-    test_row = ['test']
-    validation_row = ['validation']
+    train_row = ['Train']
+    test_row = ['Test']
+    validation_row = ['Validation']
 
     for name in info['class_names']:
         train_row.append(info['training']['train'][name])
@@ -34,7 +31,7 @@ def write_dataset_info(info, directory_path):
     # line break
     writer.writerow('')
 
-    meta_row_headers = ['training_total', 'validation_total', 'features', 'features_after_selection']
+    meta_row_headers = ['Training Total', 'Validation Total', 'Features', 'Features After Selection']
     meta_row = [
         info['training']['total'],
         info['validation']['total'],

@@ -79,8 +79,8 @@ print(confusion_matrix(y_val, predictions))
 print('\nclassification report:\n')
 print(classification_report(y_val, predictions))
 
-print('\ndata info:')
-print(info)
+# print('\ndata info:')
+# print(info)
 
 save_model = yes_no_prompt.yes_or_no('Save model?')
 

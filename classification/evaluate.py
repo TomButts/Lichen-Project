@@ -20,7 +20,7 @@ import time
 import getopt
 
 from tools.evaluation.load import load
-from tools.evaluation.reports import metrics, dataset
+from tools.evaluation.reports import model, dataset, configuration
 
 def evaluate(input_directory, output_directory=None):
     if input_directory is None:
@@ -36,7 +36,17 @@ def evaluate(input_directory, output_directory=None):
 
     items = load(input_directory)
 
-    dataset.write_dataset_info(items['info'], output_directory)
+    if 'mlp' in items['config']:
+        model_options = items['config']['mlp']
+    else:
+        model_options = items['config']['svc']
+
+    ## write dataset information csv
+    # dataset.write_dataset_info(items['info'], output_directory)
+
+    grid_options = {'accuracy': items['accuracy_grid'], 'f1_macro': items['f1_macro_grid'], 'neg_log_loss': items['neg_log_loss_grid']}
+
+    configuration.write_config_info(model_options, grid_options, items['config'], output_directory)
 
 def usage():
     print("\nEvaluation Tool\n")
