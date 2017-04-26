@@ -16,28 +16,27 @@ python evaluate.py -u
 
 import sys
 import os
+import time
 import getopt
 
 from tools.evaluation.load import load
-from tools.evaluation.metrics import metrics
+from tools.evaluation.reports import metrics, dataset
 
-def evaluate(directory_path, mode=None):
-    if directory_path is None:
+def evaluate(input_directory, output_directory=None):
+    if input_directory is None:
         print('\nA directory with model and training data is required')
         exit()
 
-    items = load(directory_path)
-    scores = None
+    if output_directory == None:
+        now = time.strftime("%d-%b-%H%M%S")
+        output_directory = '/Users/tom/Masters-Project/Lichen-Project/classification/output/evaluations/evaluation-' + now
 
-    # if 'mlp' in items['config']:
-    #     model_options = items['config']['mlp']
-    # else:
-    #     model_options = items['config']['svc']
-    #
-    # # regular classifications
-    # metrics(items['model'], items['data'], scores, mode)
+    if os.path.isdir(output_directory) == False:
+        os.mkdir(output_directory)
 
-    return scores
+    items = load(input_directory)
+
+    dataset.write_dataset_info(items['info'], output_directory)
 
 def usage():
     print("\nEvaluation Tool\n")
@@ -58,7 +57,6 @@ if __name__ == "__main__":
             if opt in ('-n'):
                 # TODO change
                 evaluate(arg)
-
                 exit()
             elif opt in ('-u'):
                 usage()

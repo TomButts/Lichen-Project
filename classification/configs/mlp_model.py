@@ -12,7 +12,7 @@ options = dict(
         variance_threshold = .8,
         feature_percentile = dict(
             mode='f_classif',
-            percentage=10,
+            percentage=2,
         )
     ),
     scaling = 'StandardScaler',

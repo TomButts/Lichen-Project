@@ -82,7 +82,7 @@ def count_unique(targets, class_names):
     class_count = {}
 
     for unique in set(targets):
-        class_name = class_names[int(unique) - 1]
+        class_name = class_names[int(float(unique)) - 1]
         class_count[class_name] = targets.count(unique)
 
     return class_count

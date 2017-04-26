@@ -1,8 +1,13 @@
 images
 *.png
 *.jpg
+*.pyc
+*~
+__pycache__
+.DS_Store
 /models/
 feature-extraction/inception-resnet-v2/checkpoints/
 feature-extraction/inception-resnet-v2/labels/
 classification/multi-layer-perceptron/checkpoints/
+classification/output/
 *.csv

@@ -23,9 +23,11 @@ def fit_selectors(features, targets, options):
     return variance_threshold_selector, percentile_selector
 
 def transform_features(features, variance_threshold_selector=None, percentile_selector=None):
+    print(len(features[0]))
     if variance_threshold_selector != None:
         features = variance_threshold_selector.transform(features)
 
+    print(len(features[0]))
     if percentile_selector != None:
         features  = percentile_selector.transform(features)
 
