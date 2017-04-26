@@ -9,10 +9,6 @@ Args:
     directory_path: which folder to run on
     mode: leave blank for single folder
 
-Command line tool:
-Can be used in normal -n and loop -l mode.
-Argument is directory_path to training data
-
 For usage details:
 python evaluate.py -u
 ============================
@@ -23,9 +19,7 @@ import os
 import getopt
 
 from tools.evaluation.load import load
-from tools.evaluation.write import write_scores_csv
-from tools.evaluation.reports.multi_class import multi_class
-from tools.evaluation.reports.probabilistic import probabilistic
+from tools.evaluation.metrics import metrics
 
 def evaluate(directory_path, mode=None):
     if directory_path is None:
@@ -35,21 +29,13 @@ def evaluate(directory_path, mode=None):
     items = load(directory_path)
     scores = None
 
-    if 'mlp' in items['config']:
-        model_options = items['config']['mlp']
-    else:
-        model_options = items['config']['svc']
-
-    if model_options['probability']:
-        # probability model without calibration
-        scores = probabilistic(
-            items['model'],
-            items['data'],
-            items['config'],
-            mode)
-
-    # regular classifications
-    scores = multi_class(items['model'], items['data'], scores, mode)
+    # if 'mlp' in items['config']:
+    #     model_options = items['config']['mlp']
+    # else:
+    #     model_options = items['config']['svc']
+    #
+    # # regular classifications
+    # metrics(items['model'], items['data'], scores, mode)
 
     return scores
 
@@ -70,19 +56,12 @@ if __name__ == "__main__":
 
         for opt, arg in options:
             if opt in ('-n'):
+                # TODO change
                 evaluate(arg)
+
                 exit()
             elif opt in ('-u'):
                 usage()
-                exit()
-            elif opt in ('-l'):
-                csv_scores = []
-
-                for subdir, dirs, _ in os.walk(arg):
-                    if subdir != arg:
-                        csv_scores.append(evaluate(subdir, mode='loop'))
-
-                write_scores_csv(csv_scores)
                 exit()
     except getopt.GetoptError as err:
         # print(err)

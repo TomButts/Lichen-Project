@@ -12,7 +12,7 @@ from configs import mlp_model as config
 from models.mlp import mlp
 from models.svc import svc
 
-from tools.training.data import get_data
+from tools.training.data import get_data, dataset_info, post_processing_info
 from tools.training.feature_selection import fit_selectors, transform_features
 from tools.training.preprocessing import scale, prepare
 from tools.training.output import export
@@ -23,8 +23,6 @@ from itertools import groupby
 import numpy as np
 
 options = config.options
-
-info = {}
 
 # /Users/tom/Masters-Project/Lichen-Project/feature-extraction/custom/output/lichen-20170410-165620.csv
 # /Users/tom/Masters-Project/Lichen-Images/Datasets/datatset-01-04-17/transformed-classes-2/dataset-01-04-17.csv
@@ -38,16 +36,7 @@ X, y = get_data(
 X_val, y_val = get_data(
     '/Users/tom/Masters-Project/Lichen-Images/Datasets/datatset-01-04-17/transformed-classes-2/Split-Dataset/train-0.7-val-0.3/validation.csv')
 
-info['total'] = len(y)
-info['classes'] = len(set(y))
-info['class_names'] = ['Physcia', 'Xanthoria', 'Flavoparmelia', 'Evernia']
-
-count = {}
-
-for unique in set(y):
-    count[unique] = y.count(unique)
-
-info['count'] = count
+info = dataset_info(X, y, X_val, y_val)
 
 selectors = None
 
@@ -66,8 +55,7 @@ if 'scaling' in options:
 
 X_train, X_test, y_train, y_test = prepare(X, y)
 
-info['training'] = len(y_train)
-info['test'] = len(y_test)
+info = post_processing_info(info, X_train, y_train, y_test, X_val)
 
 if 'mlp' in options:
     model_options = options['mlp']
@@ -87,8 +75,10 @@ predictions = classifiers['accuracy'].predict(X_val)
 
 print('\nconfusion matrix:')
 print(confusion_matrix(y_val, predictions))
+
 print('\nclassification report:\n')
 print(classification_report(y_val, predictions))
+
 print('\ndata info:')
 print(info)
 
