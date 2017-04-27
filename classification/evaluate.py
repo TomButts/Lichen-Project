@@ -22,12 +22,13 @@ import getopt
 from tools.evaluation.load import load
 from tools.evaluation.reports import model, dataset, configuration
 
+
 def evaluate(input_directory, output_directory=None):
     if input_directory is None:
         print('\nA directory with model and training data is required')
         exit()
 
-    if output_directory == None:
+    if output_directory is None:
         now = time.strftime("%d-%b-%H%M%S")
         output_directory = '/Users/tom/Masters-Project/Lichen-Project/classification/output/evaluations/evaluation-' + now
 
@@ -41,12 +42,20 @@ def evaluate(input_directory, output_directory=None):
     else:
         model_options = items['config']['svc']
 
-    ## write dataset information csv
-    # dataset.write_dataset_info(items['info'], output_directory)
+    # write dataset information csv
+    dataset.write_dataset_info(items['info'], output_directory)
 
     grid_options = {'accuracy': items['accuracy_grid'], 'f1_macro': items['f1_macro_grid'], 'neg_log_loss': items['neg_log_loss_grid']}
-
     configuration.write_config_info(model_options, grid_options, items['config'], output_directory)
+
+    models = {'accuracy': items['accuracy'], 'f1_macro': items['f1_macro'], 'neg_log_loss': items['neg_log_loss']}
+
+    model.write_model_csv(
+        items['best_parameters'],
+        items['data'],
+        models,
+        output_directory
+    )
 
 def usage():
     print("\nEvaluation Tool\n")
