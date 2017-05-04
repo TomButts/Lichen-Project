@@ -11,3 +11,4 @@ feature-extraction/inception-resnet-v2/labels/
 classification/multi-layer-perceptron/checkpoints/
 classification/output/
 *.csv
+segementation/lichen-env/
