@@ -17,7 +17,7 @@ def augment(image_path):
     image = rotate(image, degrees, resize=True)
 
     # scale
-    scale = uniform(0.6, 1.25)
+    scale = uniform(0.75, 1.25)
 
     image = rescale(image, scale)
 

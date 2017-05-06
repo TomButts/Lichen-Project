@@ -15,17 +15,14 @@ def write_dataset_info(info, directory_path):
 
     writer.writerow(headers)
 
-    train_row = ['Train']
-    test_row = ['Test']
+    train_row = ['Training']
     validation_row = ['Validation']
 
     for name in info['class_names']:
-        train_row.append(info['training']['train'][name])
-        test_row.append(info['training']['test'][name])
+        train_row.append(info['training']['class_count'][name])
         validation_row.append(info['validation']['class_count'][name])
 
     writer.writerow(train_row)
-    writer.writerow(test_row)
     writer.writerow(validation_row)
 
     # line break

@@ -51,26 +51,9 @@ def dataset_info(training_data, training_targets, validation_data, validation_ta
 
     return info
 
-def post_processing_info(info, training_data, training_targets, testing_targets, validation_data):
-    info['training']['train'] = {}
-    info['training']['test'] = {}
-
-    info['training']['train']['total']= len(training_targets)
-    info['training']['test']['total'] = len(testing_targets)
-
+def post_processing_info(info, training_data, validation_data):
     info['training']['features_after_selection'] = len(training_data[0])
     info['validation']['features_after_selection'] = len(validation_data[0])
-
-    training_class_count = {}
-    testing_class_count = {}
-
-    training_class_count = count_unique(training_targets, info['class_names'])
-
-    info['training']['train'] = training_class_count
-
-    testing_class_count = count_unique(testing_targets, info['class_names'])
-
-    info['training']['test'] = testing_class_count
 
     return info
 

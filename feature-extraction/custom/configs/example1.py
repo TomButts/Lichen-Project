@@ -18,8 +18,8 @@ options = dict(
         n_scales=8,
         n_keypoints=50,
         fast_n=9,
-        fast_threshold=0.08,
-        harris_k=0.04
+        fast_threshold=0.12,
+        harris_k=0.14
     ),
     kmeans = dict(
         clusters = 5,

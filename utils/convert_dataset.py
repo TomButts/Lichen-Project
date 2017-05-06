@@ -5,6 +5,8 @@ import os
 import time
 from progressbar import AdaptiveETA, ProgressBar, Percentage, Counter
 
+from time import sleep
+
 # enable long console output
 # np.set_printoptions(threshold = sys.maxint)
 
@@ -45,6 +47,9 @@ def convert_dataset(directory_path, target_path, target_parser, feature_extracto
 
             # write row to csv
             writer.writerow(features)
+
+            if index == 25 or index == 45 or index == 65:
+                sleep(300)
 
             # update counter
             index += 1

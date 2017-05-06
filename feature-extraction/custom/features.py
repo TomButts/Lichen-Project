@@ -59,6 +59,9 @@ def features(image_path):
         orb_extractor.detect_and_extract(grey_image)
 
         features.append(orb_extractor.keypoints.tolist())
+        features.append(orb_extractor.scales.tolist())
+        features.append(orb_extractor.orientations.tolist())
+        features.append(orb_extractor.responses.tolist())
 
         # features.append(orb_extractor.descriptors.tolist())
 

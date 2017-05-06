@@ -22,7 +22,6 @@ import getopt
 from tools.evaluation.load import load
 from tools.evaluation.reports import model, dataset, configuration
 
-
 def evaluate(input_directory, output_directory=None):
     if input_directory is None:
         print('\nA directory with model and training data is required')

@@ -2,18 +2,18 @@ import os
 import time
 import pickle
 
-def export(classifiers, data, selectors, options, info):
+def export(classifiers, data, selectors, options, info, scaler=None):
     if 'mlp' in options:
         model_options = options['mlp']
         output_path = os.path.abspath('output/mlp')
     else:
         model_options = options['svc']
-        output_path = os.path.abspath('output/svc/c-value/CNN')
+        output_path = os.path.abspath('output/svc')
 
     # print(output_path)
     now = time.strftime("%d-%b-%H%M%S")
 
-    score = classifiers['accuracy'].score(data['X_test'], data['y_test'])
+    score = classifiers['accuracy'].score(data['X_val'], data['y_val'])
 
     results_directory = output_path + '/' + now + '-' + format(score, '.2f')
 
@@ -41,6 +41,9 @@ def export(classifiers, data, selectors, options, info):
     save(options, 'config', results_directory)
 
     save(info, 'info', results_directory)
+
+    if scaler != None:
+        save(scaler, 'scaler', results_directory)
 
     return results_directory
 

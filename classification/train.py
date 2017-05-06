@@ -14,27 +14,23 @@ from models.svc import svc
 
 from tools.training.data import get_data, dataset_info, post_processing_info
 from tools.training.feature_selection import fit_selectors, transform_features
-from tools.training.preprocessing import scale, prepare
+from tools.training.preprocessing import scale
 from tools.training.output import export
 
 from sklearn.metrics import classification_report, confusion_matrix, log_loss
+from sklearn.utils import shuffle
 from itertools import groupby
 
 import numpy as np
 
 options = config.options
 
-# /Users/tom/Masters-Project/Lichen-Project/feature-extraction/custom/output/lichen-20170410-165620.csv
-# /Users/tom/Masters-Project/Lichen-Images/Datasets/datatset-01-04-17/transformed-classes-2/dataset-01-04-17.csv
-#
-# /Users/tom/Masters-Project/Lichen-Images/Datasets/datatset-01-04-17/transformed-classes-2/Split-Dataset/train-0.7-val-0.3
-# /Users/tom/Masters-Project/Lichen-Images/Datasets/datatset-01-04-17/transformed-classes-2/Split-Dataset/train-0.7-validation-0.3/validation.csv
-
+# /Users/tom/Masters-Project/Lichen-Images/Datasets/original-dataset/inception-features/training-20170429-103006.csv
 X, y = get_data(
-    '/Users/tom/Masters-Project/Lichen-Images/Datasets/datatset-01-04-17/transformed-classes-2/dataset-01-04-17.csv')
+    '/Users/tom/Masters-Project/Lichen-Images/Datasets/original-dataset/inception-features/training-20170429-103006.csv')
 
 X_val, y_val = get_data(
-    '/Users/tom/Masters-Project/Lichen-Images/Datasets/datatset-01-04-17/transformed-classes-2/dataset-01-04-17.csv')
+    '/Users/tom/Masters-Project/Lichen-Images/Datasets/original-dataset/inception-features/validation-20170429-231421.csv')
 
 info = dataset_info(X, y, X_val, y_val)
 
@@ -50,19 +46,22 @@ if 'selectors' in options:
     selectors = {'variance': variance_threshold_selector, 'percentile': percentile_selector}
 
 if 'scaling' in options:
-    X = scale(X, options['scaling'])
-    X_val = scale(X_val, options['scaling'])
+    X, scaler = scale(X, options['scaling'])
 
-X_train, X_test, y_train, y_test = prepare(X, y)
+    if scaler != None:
+        X_val = scaler.transform(X_val)
 
-info = post_processing_info(info, X_train, y_train, y_test, X_val)
+X, y = shuffle(X, y)
+X_val, y_val = shuffle(X_val, y_val)
+
+info = post_processing_info(info, X, X_val)
 
 if 'mlp' in options:
     model_options = options['mlp']
-    classifiers = mlp(X_train, y_train, model_options)
+    classifiers = mlp(X, y, model_options)
 else:
     model_options = options['svc']
-    classifiers = svc(X_train, y_train, model_options)
+    classifiers = svc(X, y, model_options)
 
 # Print some intial analysis
 if model_options['probability']:
@@ -75,12 +74,9 @@ predictions = classifiers['accuracy'].predict(X_val)
 
 print('\nconfusion matrix:')
 print(confusion_matrix(y_val, predictions))
-
 print('\nclassification report:\n')
 print(classification_report(y_val, predictions))
-
-# print('\ndata info:')
-# print(info)
+print(info)
 
 save_model = yes_no_prompt.yes_or_no('Save model?')
 
@@ -89,12 +85,8 @@ if save_model:
     data = {
         'X': X,
         'y': y,
-        'X_train': X_train,
-        'X_test': X_test,
-        'y_train': y_train,
-        'y_test': y_test,
         'X_val': X_val,
         'y_val': y_val,
     }
 
-    results_directory = export(classifiers, data, selectors, options, info)
+    results_directory = export(classifiers, data, selectors, options, info, scaler)

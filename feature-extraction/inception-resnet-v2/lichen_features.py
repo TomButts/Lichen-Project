@@ -10,13 +10,13 @@ import convert_dataset
 import parse_csv as target_parser
 import time
 
-directory = '/Users/tom/Masters-Project/Lichen-Images/Datasets/datatset-01-04-17/transformed-classes-2/Xanthoria-Ordered'
+directory = '/Users/tom/Masters-Project/Lichen-Images/Datasets/augmented-dataset/augmented-validation/Ordered'
 
 targets_path = directory + '/labels.csv'
 
 now = time.strftime("%Y%m%d-%H%M%S")
 
-output_path = '/Users/tom/Masters-Project/Lichen-Images/Datasets/datatset-01-04-17/transformed-classes-2/Xanthoria-' + now + '.csv'
+output_path = '/Users/tom/Masters-Project/Lichen-Images/Datasets/augmented-dataset/augmented-training/validation-' + now + '.csv'
 
 print('\nSaving to:\n' + output_path)
 

@@ -4,7 +4,7 @@ import csv
 import shutil
 
 dir = os.path.dirname(__file__)
-lichen_images = os.path.join(dir, '../../Lichen-Images/Datasets/datatset-01-04-17/seg-tr-classes/')
+lichen_images = os.path.join(dir, '/Users/tom/Masters-Project/Lichen-Images/Datasets/augmented-dataset/augmented-validation/')
 sys.path.append(lichen_images)
 
 base_directory = os.path.abspath(lichen_images)

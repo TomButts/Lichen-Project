@@ -8,6 +8,9 @@ def scale(data, scaling_type):
 
     Apply appropriate data scaling according to config options
     """
+
+    scaler = None
+    
     if scaling_type == 'StandardScaler':
         scaler = StandardScaler()
 
@@ -20,14 +23,4 @@ def scale(data, scaling_type):
 
         data = max_abs_scaler.fit_transform(data)
 
-    return data
-
-
-def prepare(data, targets):
-    """Prepare the data
-
-    shuffle data then split into training and testing batches
-    """
-    data, targets = shuffle(data, targets, random_state=0)
-
-    return train_test_split(data, targets)
+    return data, scaler
