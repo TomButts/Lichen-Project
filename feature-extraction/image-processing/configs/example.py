@@ -5,9 +5,6 @@ If the feature is used make sure all the required parameters are available.
 Optional parameters can be handled as None.
 """
 
-# if a method that works on grayscale is being run
-# mark as true
-
 options = dict(
     grey_required = True,
     glcm = dict(

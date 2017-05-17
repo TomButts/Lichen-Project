@@ -1,7 +1,11 @@
+"""
+This function handles logic for scaling feature sets during training.
+
+"""
+
 from sklearn.preprocessing import StandardScaler, MaxAbsScaler
 from sklearn.model_selection import train_test_split
 from sklearn.utils import shuffle
-
 
 def scale(data, scaling_type):
     """Scale the training data
@@ -10,7 +14,7 @@ def scale(data, scaling_type):
     """
 
     scaler = None
-    
+
     if scaling_type == 'StandardScaler':
         scaler = StandardScaler()
 

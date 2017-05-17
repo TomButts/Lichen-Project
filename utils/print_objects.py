@@ -1,9 +1,7 @@
-"""
-This function loads the required training files containing serialised
-information.
-"""
 import pickle
 import os
+import getopt
+import sys
 
 def load(directory_path):
     """Load all pickled files in folder
@@ -25,3 +23,21 @@ def load(directory_path):
                 open(directory_path + '/' + filename, 'rb'))
 
     return items
+
+def print_objects(directory_path):
+    items = load(directory_path)
+
+    for key, item in items.iteritems():
+        print(key)
+        print(item)
+
+if __name__ == "__main__":
+    try:
+        options, remainder = getopt.getopt(sys.argv[1:], 'p:')
+    except getopt.GetoptError as err:
+         print(err)
+         exit()
+
+    for opt, arg in options:
+        if opt in ('-p'):
+            print_objects(arg)

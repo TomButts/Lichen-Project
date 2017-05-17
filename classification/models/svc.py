@@ -1,3 +1,7 @@
+"""
+SVC Model Selection Function
+"""
+
 from sklearn.svm import SVC
 from sklearn.model_selection import GridSearchCV
 

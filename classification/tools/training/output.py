@@ -1,14 +1,19 @@
+"""
+These functions handle serialising training objects and saving them
+to an ouput folder.
+"""
+
 import os
 import time
 import pickle
 
-def export(classifiers, data, selectors, options, info, scaler=None):
+def export(classifiers, data, selectors, options, info, scaler=None, folder_name=None):
     if 'mlp' in options:
         model_options = options['mlp']
-        output_path = os.path.abspath('output/mlp')
+        output_path = os.path.abspath('output/evaluations/Model/MLP/')
     else:
         model_options = options['svc']
-        output_path = os.path.abspath('output/svc')
+        output_path = os.path.abspath('output/evaluations/Model/SVC/')
 
     # print(output_path)
     now = time.strftime("%d-%b-%H%M%S")
@@ -16,6 +21,9 @@ def export(classifiers, data, selectors, options, info, scaler=None):
     score = classifiers['accuracy'].score(data['X_val'], data['y_val'])
 
     results_directory = output_path + '/' + now + '-' + format(score, '.2f')
+
+    if folder_name != None:
+        results_directory = output_path + '/' + folder_name
 
     if not os.path.exists(results_directory):
         os.makedirs(results_directory)

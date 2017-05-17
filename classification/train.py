@@ -1,3 +1,14 @@
+#!/usr/bin/env python
+'''
+Train Model:
+
+This file trains a model using configuration settings found in:
+
+/classification/configs/
+
+============================
+'''
+
 import sys
 import os
 
@@ -8,6 +19,7 @@ sys.path.append(utils_path)
 import yes_no_prompt
 
 from configs import mlp_model as config
+# from configs import svc_model as config
 
 from models.mlp import mlp
 from models.svc import svc
@@ -25,12 +37,38 @@ import numpy as np
 
 options = config.options
 
-# /Users/tom/Masters-Project/Lichen-Images/Datasets/original-dataset/inception-features/training-20170429-103006.csv
+# Original Custom
+# folder_name = 'original-custom-5'
+# X, y = get_data(
+#     '/Users/tom/Masters-Project/Lichen-Images/Feature Sets/original-custom-5/training-80.csv')
+#
+# X_val, y_val = get_data(
+#     '/Users/tom/Masters-Project/Lichen-Images/Feature Sets/original-custom-5/validation-20.csv')
+
+# Augmented Custom
+folder_name = 'augmented-custom-5'
 X, y = get_data(
-    '/Users/tom/Masters-Project/Lichen-Images/Datasets/original-dataset/inception-features/training-20170429-103006.csv')
+    '/Users/tom/Masters-Project/Lichen-Images/Feature Sets/augmented-custom-5/training-80/training.csv')
 
 X_val, y_val = get_data(
-    '/Users/tom/Masters-Project/Lichen-Images/Datasets/original-dataset/inception-features/validation-20170429-231421.csv')
+    '/Users/tom/Masters-Project/Lichen-Images/Feature Sets/augmented-custom-5/validation-20/validation.csv')
+
+# # Original Inception
+# folder_name = 'original-inception'
+# X, y = get_data(
+#     '/Users/tom/Masters-Project/Lichen-Images/Feature Sets/original-inception/training-80.csv')
+#
+# X_val, y_val = get_data(
+#     '/Users/tom/Masters-Project/Lichen-Images/Feature Sets/original-inception/validation-20.csv')
+# #
+# # Augmented Inception
+# folder_name = 'augmented-inception'
+# X, y = get_data(
+#     '/Users/tom/Masters-Project/Lichen-Images/Feature Sets/augmented-inception/training-80/training.csv')
+#
+# X_val, y_val = get_data(
+#     '/Users/tom/Masters-Project/Lichen-Images/Feature Sets/augmented-inception/validation-20/validation.csv')
+
 
 info = dataset_info(X, y, X_val, y_val)
 
@@ -89,4 +127,4 @@ if save_model:
         'y_val': y_val,
     }
 
-    results_directory = export(classifiers, data, selectors, options, info, scaler)
+    results_directory = export(classifiers, data, selectors, options, info, scaler, folder_name)

@@ -1,4 +1,10 @@
-from configs import example1
+"""
+This file handles logic for all image processing feature extraction
+techniques.
+
+"""
+
+from configs import custom_5 as config
 import glcm
 from skimage.feature import ORB
 from skimage.color import rgb2grey
@@ -16,7 +22,7 @@ sys.path.append(utils_path)
 
 import flatten
 
-options = example1.options
+options = config.options
 
 np.set_printoptions(threshold = sys.maxint)
 
@@ -59,9 +65,9 @@ def features(image_path):
         orb_extractor.detect_and_extract(grey_image)
 
         features.append(orb_extractor.keypoints.tolist())
-        features.append(orb_extractor.scales.tolist())
-        features.append(orb_extractor.orientations.tolist())
-        features.append(orb_extractor.responses.tolist())
+        # features.append(orb_extractor.scales.tolist())
+        # features.append(orb_extractor.orientations.tolist())
+        # features.append(orb_extractor.responses.tolist())
 
         # features.append(orb_extractor.descriptors.tolist())
 

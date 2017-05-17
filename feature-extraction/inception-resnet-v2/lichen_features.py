@@ -1,3 +1,9 @@
+"""
+This file handles the top level extraction approach.
+
+The inception feature extractor is applied.
+"""
+
 import sys
 import os
 import inception_features as incep_res

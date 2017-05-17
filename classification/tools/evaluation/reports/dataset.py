@@ -1,3 +1,9 @@
+"""
+This file formats and writes the info csv file
+during model evaluation.
+
+"""
+
 import csv
 
 def write_dataset_info(info, directory_path):

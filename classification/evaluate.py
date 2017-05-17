@@ -29,7 +29,7 @@ def evaluate(input_directory, output_directory=None):
 
     if output_directory is None:
         now = time.strftime("%d-%b-%H%M%S")
-        output_directory = '/Users/tom/Masters-Project/Lichen-Project/classification/output/evaluations/evaluation-' + now
+        output_directory = input_directory + '/evaluation-' + now
 
     if os.path.isdir(output_directory) == False:
         os.mkdir(output_directory)

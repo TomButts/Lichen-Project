@@ -1,3 +1,8 @@
+"""
+This file downloads and decompresses a checkpoint file containing
+the latest inception_resnet_v2 weights.
+
+"""
 import sys
 import os
 

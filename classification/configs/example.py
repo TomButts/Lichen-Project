@@ -2,19 +2,6 @@
 
 """
 
-# mlp = dict(
-#     hidden_layer_sizes=(20, 60, 30),
-#     max_iter=2000,
-#     probability=False,
-# )
-#
-# svc = dict(
-#     probability=True,
-#     kernel="rbf",
-#     C=2.8,
-#     gamma=.0073
-# ),
-
 options = dict(
     svc = dict(
         tuned_parameters = [

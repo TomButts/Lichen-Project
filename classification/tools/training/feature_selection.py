@@ -1,3 +1,8 @@
+"""
+These functions handle feature selection logic.
+
+"""
+
 from sklearn.feature_selection import VarianceThreshold, SelectPercentile
 import sklearn.feature_selection as selection
 

@@ -1,3 +1,8 @@
+"""
+This file handles inception_resnet_v2 feature extraction.
+
+"""
+
 import numpy as np
 import os
 import sys

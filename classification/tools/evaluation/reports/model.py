@@ -1,3 +1,9 @@
+"""
+This file handles functions that evaluate models trained using
+the training system. The evaluations are outputted to csv files.
+
+"""
+
 from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score, log_loss, confusion_matrix
 import pandas as pd
 import csv
