@@ -3,30 +3,37 @@ These functions handle serialising training objects and saving them
 to an ouput folder.
 """
 
+import sys
 import os
 import time
 import pickle
 
-def export(classifiers, data, selectors, options, info, scaler=None, folder_name=None):
-    if 'mlp' in options:
-        model_options = options['mlp']
-        output_path = os.path.abspath('output/evaluations/Model/MLP/')
-    else:
-        model_options = options['svc']
-        output_path = os.path.abspath('output/evaluations/Model/SVC/')
+dir = os.path.dirname(__file__)
+utils_path = os.path.join(dir, '../utils')
+sys.path.append(utils_path)
 
-    # print(output_path)
-    now = time.strftime("%d-%b-%H%M%S")
+import yes_no_prompt
 
-    score = classifiers['accuracy'].score(data['X_val'], data['y_val'])
+def export(classifiers, data, selectors, options, info, scaler=None, folder_name=None, output_directory=None):
+    if folder_name == None:
+        now = time.strftime("%d-%b-%H%M%S")
+        folder_name = '/evaluation-' + now
 
-    results_directory = output_path + '/' + now + '-' + format(score, '.2f')
+    if output_directory == None:
+        output_directory = os.path.abspath('output/evaluations/')
 
-    if folder_name != None:
-        results_directory = output_path + '/' + folder_name
+    results_directory = output_directory + folder_name
+
+    print(results_directory)
 
     if not os.path.exists(results_directory):
         os.makedirs(results_directory)
+    else:
+        print('A training output of the same name exists.\n')
+        replace_output = yes_no_prompt.yes_or_no('Replace Training Folder?')
+
+        if not replace_output:
+            exit()
 
     save(data, 'data', results_directory)
 

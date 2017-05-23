@@ -1,20 +1,24 @@
 options = dict(
     mlp = dict(
         tuned_parameters=[
-            {'solver': ['sgd'], 'alpha': [0.001, 0.01, 1, 5, 10, 100, 1000], 'hidden_layer_sizes': [[2], [5], [10], [15], [20], [25], [40]]},
-            {'solver': ['lbfgs'], 'alpha': [0.001, 0.01, 1, 5, 10, 100, 1000], 'hidden_layer_sizes': [[2], [5], [10], [15], [20], [25], [40]]},
-            {'solver': ['adam'], 'alpha': [0.001, 0.01, 1, 5, 10, 100, 1000], 'hidden_layer_sizes': [[2], [5], [10], [15], [20], [25], [40]]},
+            {'solver': ['sgd'], 'alpha': [1, 5]},
+            {'solver': ['lbfgs'], 'alpha': [1, 5]},
+            {'solver': ['adam'], 'alpha': [1, 5]},
         ],
         scoring_strategies=['f1_macro', 'accuracy', 'neg_log_loss'],
         probability=True
     ),
-    # selectors=dict(
-    #     # variance_threshold=.1,
-    #     # feature_percentile=dict(
-    #     #     mode='f_classif',
-    #     #     percentage=5,
-    #     # )
-    # ),
+    selectors=dict(
+        # variance_threshold=.1,
+        feature_percentile=dict(
+            mode='f_classif',
+            percentage=1,
+        )
+    ),
     scaling='StandardScaler',
+    training_directory='/Users/tom/Masters-Project/Lichen-Images/Feature Sets/augmented-inception/training-80/training.csv',
+    validation_directory='/Users/tom/Masters-Project/Lichen-Images/Feature Sets/augmented-inception/validation-20/validation.csv',
+    output_directory='/Users/tom/Masters-Project/Evaluations/',
+    folder_name='test',
     transform_factor=2
 )

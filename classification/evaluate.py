@@ -73,7 +73,6 @@ if __name__ == "__main__":
 
         for opt, arg in options:
             if opt in ('-n'):
-                # TODO change
                 evaluate(arg)
                 exit()
             elif opt in ('-u'):
