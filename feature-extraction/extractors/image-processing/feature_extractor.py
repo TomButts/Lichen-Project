@@ -1,11 +1,3 @@
-"""
-This file handles logic for all image processing feature extraction
-techniques.
-
-"""
-
-from configs import custom_5 as config
-import glcm
 from skimage.feature import ORB
 from skimage.color import rgb2grey
 from skimage.io import imread
@@ -16,21 +8,19 @@ import numpy as np
 import sys
 import os
 
-dir = os.path.dirname(__file__)
-utils_path = os.path.join(dir, '../../utils')
-sys.path.append(utils_path)
+# Add any extra modules to the python path
+import_path = os.path.abspath('./extractors/image-processing')
+sys.path.append(import_path)
 
+import glcm
 import flatten
 
-options = config.options
-
-np.set_printoptions(threshold = sys.maxint)
-
-def features(image_path):
+def feature_extractor(image_path, options=None):
     """Extracts a set of features (described in config file) from an image.
     Args:
         image_path: the path to the image
-
+        options: the configuration file settings. In this case the settings should contain
+                 relevant image processing feature options.
     Return:
         an array of features which depending on the config options
     """
@@ -64,6 +54,7 @@ def features(image_path):
 
         orb_extractor.detect_and_extract(grey_image)
 
+        # TODO add these to config system
         features.append(orb_extractor.keypoints.tolist())
         # features.append(orb_extractor.scales.tolist())
         # features.append(orb_extractor.orientations.tolist())

@@ -1,12 +1,17 @@
-"""
-These functions handle feature selection logic.
-
-"""
-
 from sklearn.feature_selection import VarianceThreshold, SelectPercentile
 import sklearn.feature_selection as selection
 
 def fit_selectors(features, targets, options):
+    """Fit the feature selectors used in training
+
+    Args:
+        features: the feature data
+        targets: feature labels
+        options: configuration settings dictionary
+    Returns:
+        variance_threshold_selector: a fitted variance threshold selector object
+        percentile_selector: a fitted univariate selector object
+    """
     variance_threshold_selector = None
     percentile_selector = None
 
@@ -28,6 +33,15 @@ def fit_selectors(features, targets, options):
     return variance_threshold_selector, percentile_selector
 
 def transform_features(features, variance_threshold_selector=None, percentile_selector=None):
+    """Applies feature selector objects to data
+
+    Args:
+        features: the features to be transformed
+        variance_threshold_selector: variance threshold selector object
+        percentile_selector: univariate selector object
+    Returns:
+        features: feature selected version of feature set
+    """
     if variance_threshold_selector != None:
         features = variance_threshold_selector.transform(features)
 

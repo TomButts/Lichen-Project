@@ -1,7 +1,3 @@
-"""
-This function loads the required training files containing serialised
-information.
-"""
 import pickle
 import os
 

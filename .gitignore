@@ -6,9 +6,7 @@ images
 __pycache__
 .DS_Store
 /models/
-feature-extraction/inception-resnet-v2/checkpoints/
-feature-extraction/inception-resnet-v2/labels/
-classification/multi-layer-perceptron/checkpoints/
+feature-extraction/extractors/inception-resnet-v2/checkpoints/
+feature-extraction/configs/historical/
 classification/output/
 *.csv
-segementation/lichen-env/

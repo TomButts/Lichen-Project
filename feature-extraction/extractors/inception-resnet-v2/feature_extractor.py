@@ -1,14 +1,12 @@
-"""
-This file handles inception_resnet_v2 feature extraction.
-
-"""
-
 import numpy as np
 import os
 import sys
 
 dir = os.path.dirname(__file__)
-slimFolderPath = os.path.join(dir, '../../../Dependencies/slim')
+
+# This is the path of your downloaded copy of the TensorFlow
+# slim library.
+slimFolderPath = os.path.abspath('../../Dependencies/slim')
 
 sys.path.append(slimFolderPath)
 
@@ -20,7 +18,18 @@ import urllib2
 from nets import inception_resnet_v2
 from preprocessing import inception_preprocessing
 
-def inception_resnet_v2_features(image_path):
+def feature_extractor(image_path, options=None):
+    """Runs a trained version of inception-resnet-v2 on an image and
+       extracts the inputs from the final layer before the fully connected
+       stages.
+
+    Args:
+        image_path: the path to the image
+        options: in this case options is not used
+    Return:
+        an array of features which depending on the config options
+    """
+
     # size of images inc-resnet is compatible with
     image_size = inception_resnet_v2.inception_resnet_v2.default_image_size
 

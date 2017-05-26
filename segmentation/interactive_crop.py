@@ -2,9 +2,10 @@
 '''
 ===============================================================================
 Interactive Image Segmentation using GrabCut algorithm.
-This sample shows interactive image segmentation using grabcut algorithm.
+This tool extends the OpenCV Interactive GrabCut example.
+
 USAGE:
-    python interactive_crop.py <filename>
+    python interactive_crop.py <foldername>
 README FIRST:
     Two windows will show up, one for input and one for output.
     At first, in input window, draw a rectangle around the object using

@@ -1,7 +1,7 @@
 import scipy.io as sio
 
 def parse(targets_path):
-    """Reads 102flowers labels into a list
+    """Parse a matlab labels file
 
     Args:
         targets_path: The path to the matlab file

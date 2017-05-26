@@ -1,8 +1,3 @@
-"""
-These functions handle serialising training objects and saving them
-to an ouput folder.
-"""
-
 import sys
 import os
 import time
@@ -15,6 +10,18 @@ sys.path.append(utils_path)
 import yes_no_prompt
 
 def export(classifiers, data, selectors, options, info, scaler=None, folder_name=None, output_directory=None):
+    """Handles saving training objects
+
+    Args:
+        classifiers: classifier objects
+        data: dictionary of training and testing feature data
+        selectors: selector objects
+        options: the configuration settings
+        info: dataset meta info
+        scaler: a fitted scaler object
+        folder_name: the output folder name
+        output_directory: directory to save output folder to
+    """
     if folder_name == None:
         now = time.strftime("%d-%b-%H%M%S")
         folder_name = '/evaluation-' + now
@@ -23,8 +30,6 @@ def export(classifiers, data, selectors, options, info, scaler=None, folder_name
         output_directory = os.path.abspath('output/evaluations/')
 
     results_directory = output_directory + folder_name
-
-    print(results_directory)
 
     if not os.path.exists(results_directory):
         os.makedirs(results_directory)
@@ -63,5 +68,12 @@ def export(classifiers, data, selectors, options, info, scaler=None, folder_name
     return results_directory
 
 def save(item, name, results_directory):
+    """Serialises and saves an object
+
+    Args:
+        item: object to serialise and save
+        name: the output file name
+        results_directory: the directory to save to
+    """
     filename = results_directory + '/' + name + '.sav'
     pickle.dump(item, open(filename, 'wb'))

@@ -1,3 +1,7 @@
+'''
+Experimental approach to image segmentation
+
+'''
 import numpy as np
 import cv2
 from matplotlib import pyplot as plt
@@ -56,7 +60,7 @@ plt.title('Posterised Image'), plt.xticks([]), plt.yticks([])
 plt.show()
 cv2.waitKey(0)
 
-# Can be useful to help pick a K value
+# can be useful to help pick a K value
 # cv2.imshow("mean shifted", roi)
 # cv2.waitKey()
 

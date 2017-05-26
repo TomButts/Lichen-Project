@@ -13,7 +13,7 @@ def cluster_colours(image, clusters):
     K = clusters
     ret, label, center = cv2.kmeans(Z, K, None, criteria, 10, cv2.KMEANS_RANDOM_CENTERS)
 
-    # Now convert back into uint8, and make original image
+    # now convert back into uint8, and make original image
     center = np.uint8(center)
 
     res = center[label.flatten()]

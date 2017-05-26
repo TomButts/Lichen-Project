@@ -1,3 +1,16 @@
+'''
+The transform tool
+
+The transform tool can work in rescaling mode or augmentation mode.
+
+Using -a the tool creates slightly transformed copies of the images in a
+folder. The input_directory is used as an argument.
+
+Using -r the tool rescales a folder of images to a maximum size of 800.
+
+Settings for each mode can be changed by modifying rescale.py or augment.py.
+'''
+
 import os, os.path
 import sys
 import getopt

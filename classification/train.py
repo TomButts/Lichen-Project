@@ -1,4 +1,20 @@
 #!/usr/bin/env python
+'''
+The training tool
+
+Runs model selection, feature selection and scaling on a feature set.
+All relevant information and training objects are stored in pickle files.
+Settings files that can be used for training are found in:
+/classification/configs/
+
+Run in -c mode and specify a config as an argument.
+This will run regular training.
+
+Run in -d mode to run training with a default unique output path.
+
+Run -u for usage information.
+'''
+
 import sys
 import os
 import getopt
@@ -24,7 +40,6 @@ from sklearn.utils import shuffle
 from itertools import groupby
 
 import numpy as np
-
 
 def train(options):
     required_keys = (
