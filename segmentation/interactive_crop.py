@@ -115,7 +115,7 @@ if os.path.isdir(output_directory) == False:
     os.mkdir(output_directory)
 
 for filename in os.listdir(directory_path):
-    if filename.endswith(".jpeg") or filename.endswith(".jpg"):
+    if filename.endswith(".jpeg") or filename.endswith(".jpg") or filename.endswith(".png"):
         img = cv2.imread(directory_path + filename)
         img2 = img.copy()                               # a copy of original image
         mask = np.zeros(img.shape[:2],dtype = np.uint8) # mask initialized to PR_BG

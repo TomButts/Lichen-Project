@@ -73,7 +73,7 @@ def convert_dataset(options, mode=None):
 
     # loop through image files
     for filename in os.listdir(options['images_directory']):
-        if filename.endswith(".jpeg") or filename.endswith(".jpg"):
+        if filename.endswith(".jpeg") or filename.endswith(".jpg") or filename.endswith(".png"):
             # get list of features
             image_path = 'file:///' + options['images_directory'] + '/' + filename
 

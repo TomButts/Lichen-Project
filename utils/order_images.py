@@ -44,7 +44,7 @@ image_number = 1
 
 for folder in options['folder_names']:
     for filename in os.listdir(lichen_images + folder):
-        if filename.endswith(".jpg") or filename.endswith(".NEF") or filename.endswith(".jpeg") or filename.endswith(".JPG"):
+        if filename.endswith(".jpg") or filename.endswith(".NEF") or filename.endswith(".jpeg") or filename.endswith(".JPG") filename.endswith(".png"):
             # rename image in output folder
             shutil.copy(base_directory + '/' + folder + '/' + filename, options['output_directory'] + '/image_' + str(image_number).zfill(4) + '.jpg')
 

@@ -41,7 +41,7 @@ def transform(directory_path, function, repeat=None):
     pbar = ProgressBar(widgets = widgets, max_value = file_count).start()
 
     for filename in os.listdir(directory_path):
-        if filename.endswith(".jpeg") or filename.endswith(".jpg") or filename.endswith(".JPG"):
+        if filename.endswith(".jpeg") or filename.endswith(".jpg") or filename.endswith(".JPG") or filename.endswith(".png"):
             if repeat == None:
                 image = function(directory_path + '/' + filename)
                 transform_path = output_directory + '/' + function.__name__ + '-' + str(index) + '.jpg'
@@ -66,6 +66,8 @@ def usage():
     print('-r: Rescale the images to fit a maximum size')
     print('-a: Create randomly rotated, scaled and mirrored images\n')
     print('arg1: The path to the folder')
+    print('arg2: The number of transformed copies to make. Only available in -a mode.')
+
 
 if __name__ == "__main__":
     try:
@@ -78,7 +80,20 @@ if __name__ == "__main__":
     for opt, arg in options:
         if opt in ('-a'):
             from augment import augment
-            transform(arg, augment, 2)
+
+            # parse second argument as transform factor (int)
+            try:
+                int(remainder[0])
+                tranform_factor = int(remainder[0])
+            except:
+                print('Second argument must be an integer.\n')
+                exit()
+
+            if tranform_factor <= 1:
+                print('Transform factor must be greater than or equal to 1.\n')
+                exit()
+
+            transform(arg, augment, tranform_factor)
         elif opt in ('-r'):
             from rescale import adjust_size
             transform(arg, adjust_size)

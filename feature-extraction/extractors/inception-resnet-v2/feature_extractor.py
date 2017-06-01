@@ -6,9 +6,9 @@ dir = os.path.dirname(__file__)
 
 # This is the path of your downloaded copy of the TensorFlow
 # slim library.
-slimFolderPath = os.path.abspath('../../Dependencies/slim')
+slim_folder_path = os.path.abspath('../../Dependencies/slim')
 
-sys.path.append(slimFolderPath)
+sys.path.append(slim_folder_path)
 
 import tensorflow as tf
 import tensorflow.contrib.slim as slim
