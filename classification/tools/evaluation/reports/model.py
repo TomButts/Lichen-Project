@@ -11,7 +11,7 @@ import csv
 def write_model_csv(best_parameters, data, models, directory_path):
     model_parameters(best_parameters, directory_path)
 
-    metrics(data['X_val'], data['y_val'], models, directory_path)
+    metrics(data['X_test'], data['y_test'], models, directory_path)
 
 def model_parameters(best_parameters, directory_path):
     output_path = directory_path + '/model_parameters.csv'

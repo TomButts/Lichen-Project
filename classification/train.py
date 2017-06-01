@@ -43,8 +43,8 @@ import numpy as np
 
 def train(options):
     required_keys = (
-        'training_directory',
-        'validation_directory',
+        'training_path',
+        'test_path',
         'output_directory',
         'folder_name')
 
@@ -52,11 +52,11 @@ def train(options):
         print('Error: Missing input information.\n')
         exit()
 
-    X, y = get_data(options['training_directory'])
+    X, y = get_data(options['training_path'])
 
-    X_val, y_val = get_data(options['validation_directory'])
+    X_test, y_test = get_data(options['test_path'])
 
-    info = dataset_info(X, y, X_val, y_val)
+    info = dataset_info(X, y, X_test, y_test)
 
     selectors = None
 
@@ -69,8 +69,8 @@ def train(options):
             variance_threshold_selector,
             percentile_selector)
 
-        X_val = transform_features(
-            X_val,
+        X_test = transform_features(
+            X_test,
             variance_threshold_selector,
             percentile_selector)
 
@@ -82,12 +82,12 @@ def train(options):
         X, scaler = scale(X, options['scaling'])
 
         if scaler is not None:
-            X_val = scaler.transform(X_val)
+            X_test = scaler.transform(X_test)
 
     X, y = shuffle(X, y)
-    X_val, y_val = shuffle(X_val, y_val)
+    X_test, y_test = shuffle(X_test, y_test)
 
-    info = post_processing_info(info, X, X_val)
+    info = post_processing_info(info, X, X_test)
 
     if 'mlp' in options:
         model_options = options['mlp']
@@ -98,17 +98,17 @@ def train(options):
 
     # Print some intial analysis
     if model_options['probability']:
-        probabilities = classifiers['neg_log_loss'].predict_proba(X_val)
+        probabilities = classifiers['neg_log_loss'].predict_proba(X_test)
 
         print('Log Loss')
-        print(log_loss(y_val, probabilities))
+        print(log_loss(y_test, probabilities))
 
-    predictions = classifiers['accuracy'].predict(X_val)
+    predictions = classifiers['accuracy'].predict(X_test)
 
     print('\nconfusion matrix:')
-    print(confusion_matrix(y_val, predictions))
+    print(confusion_matrix(y_test, predictions))
     print('\nclassification report:\n')
-    print(classification_report(y_val, predictions))
+    print(classification_report(y_test, predictions))
     print(info)
 
     save_model = yes_no_prompt.yes_or_no('Save model?')
@@ -118,8 +118,8 @@ def train(options):
         data = {
             'X': X,
             'y': y,
-            'X_val': X_val,
-            'y_val': y_val,
+            'X_test': X_test,
+            'y_test': y_test,
         }
 
         results_directory = export(

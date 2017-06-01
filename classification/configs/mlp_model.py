@@ -23,8 +23,8 @@ options = dict(
         )
     ),
     scaling='StandardScaler',
-    training_directory='/Users/tom/Masters-Project/Lichen-Images/Feature Sets/augmented-inception/training-80/training.csv',
-    validation_directory='/Users/tom/Masters-Project/Lichen-Images/Feature Sets/augmented-inception/validation-20/validation.csv',
+    training_path='/Users/tom/Masters-Project/Lichen-Images/Feature Sets/augmented-inception/training-80/training.csv',
+    test_path='/Users/tom/Masters-Project/Lichen-Images/Feature Sets/augmented-inception/validation-20/validation.csv',
     output_directory='/Users/tom/Masters-Project/Evaluations/',
     folder_name='test_mlp',
     transform_factor=2
